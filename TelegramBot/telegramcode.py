@@ -1,8 +1,8 @@
-
+import config
 from typing import Final
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
-TOKEN: Final="5917622146:AAEZjjW4nPmn4nGhHOkp3UVsqXhQExGTHNU"
+TOKEN: Final=config.token
 BOT_USERNAME: Final = 'ap766_1_bot'
 
 # Lets us use the /start command
