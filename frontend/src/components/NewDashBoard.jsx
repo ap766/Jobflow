@@ -1,6 +1,10 @@
 import { useState } from 'react'
+//new import
+import { useBoardsContext } from '../hooks/useBoardsContext'
+const NewDashBoard = () => {//this new
+  
+const { dispatch } = useBoardsContext()
 
-const NewDashBoard = () => {
   const [title, setTitle] = useState('')
   const [interestedjobs, setLoad] = useState('')
   const [applied, setReps] = useState('')
@@ -28,7 +32,8 @@ const NewDashBoard = () => {
       setTitle('')
       setLoad('')
       setReps('')
-      console.log('new workout added:', json)
+      dispatch({type: 'CREATE_BOARD', payload: json})
+      //console.log('new workout added:', json)
     }
 
   }
