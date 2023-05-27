@@ -2,13 +2,15 @@ import { useState } from 'react'
 //new import
 import { useBoardsContext } from '../hooks/useBoardsContext'
 const NewDashBoard = () => {//this new
-  
+
 const { dispatch } = useBoardsContext()
 
   const [title, setTitle] = useState('')
   const [interestedjobs, setLoad] = useState('')
   const [applied, setReps] = useState('')
   const [error, setError] = useState(null)
+  const [emptyFields, setEmptyFields] = useState([])
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -26,6 +28,8 @@ const { dispatch } = useBoardsContext()
 
     if (!response.ok) {
       setError(json.error)
+      setEmptyFields(json.emptyFields)
+    
     }
     if (response.ok) {
       setError(null)
@@ -47,6 +51,8 @@ const { dispatch } = useBoardsContext()
         type="text" 
         onChange={(e) => setTitle(e.target.value)} 
         value={title}
+         className={emptyFields.includes('title') ? 'error' : ''}
+       
       />
 
       <label>Interested Jobs:</label>
@@ -54,6 +60,8 @@ const { dispatch } = useBoardsContext()
         type="text" 
         onChange={(e) => setLoad(e.target.value)} 
         value={interestedjobs}
+         className={emptyFields.includes('title') ? 'error' : ''}
+    
       />
 
       <label>Applied Job:</label>
@@ -61,6 +69,8 @@ const { dispatch } = useBoardsContext()
         type="text" 
         onChange={(e) => setReps(e.target.value)} 
         value={applied} 
+         className={emptyFields.includes('title') ? 'error' : ''}
+   
       />
 
       <button>Add</button>

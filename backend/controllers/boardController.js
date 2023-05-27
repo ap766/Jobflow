@@ -28,6 +28,19 @@ const getBoard= async (req, res) => {
 // create a new workout
 const createBoard = async (req, res) => {
   const {title, interestedjobs, applied} = req.body
+   let emptyFields = []
+   if (!title) {
+    emptyFields.push('title')
+  }
+  if (!interestedjobs) {
+    emptyFields.push('load')
+  }
+  if (!applied) {
+    emptyFields.push('reps')
+  }
+  if (emptyFields.length > 0) {
+    return res.status(400).json({ error: 'Please fill in all fields', emptyFields })
+  }
 
   // add to the database
   try {

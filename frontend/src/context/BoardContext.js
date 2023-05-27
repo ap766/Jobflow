@@ -12,6 +12,10 @@ export const boardsReducer = (state, action) => {
       return { 
         boards: [action.payload, ...state.boards] 
       }
+      case 'DELETE_BOARD':
+      return { 
+        boards: state.boards.filter(w => w._id !== action.payload._id) 
+      }
     default:
       return state
   }
