@@ -1,4 +1,4 @@
-
+import { Link } from 'react-router-dom'
 export const Home = () => {
  
   return (
@@ -9,7 +9,12 @@ JobFlow
  <div className="home">
 
       <h2>Welcome Peeps</h2>
-      <label >Loginnnn</label>
+      <nav>
+         <div>
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Signup</Link>
+          </div>
+      </nav>
     </div>
 </>
 
