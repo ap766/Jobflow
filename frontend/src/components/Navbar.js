@@ -1,36 +1,31 @@
-//No pt of this
 import { Link } from 'react-router-dom'
 import { useLogout } from '../hooks/useLogout'
 
-export const Home = () => {
- 
-   const { logout } = useLogout()
+const Navbar = () => {
+  const { logout } = useLogout()
 
   const handleClick = () => {
     logout()
   }
-  return (
-    <>
- <div className="container">
-JobFlow 
- </div>
- <div className="home">
 
-      <h2>Welcome Peeps</h2>
-      <nav>
-         <div>
+  return (
+    <header>
+      <div className="container">
+        <Link to="/">
+          <h1>JobFlow</h1>
+        </Link>
+        <nav>
+          <div>
             <button onClick={handleClick}>Log out</button>
           </div>
-         <div>
+          <div>
             <Link to="/login">Login</Link>
             <Link to="/signup">Signup</Link>
           </div>
-      </nav>
-    </div>
-</>
-
-
-
-
+        </nav>
+      </div>
+    </header>
   )
 }
+
+export default Navbar

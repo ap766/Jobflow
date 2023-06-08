@@ -9,7 +9,6 @@ const BoardDetails = ({ board }) => {
 
   //Added this
    const { dispatch } = useBoardsContext()
-
     const handleClick = async () => {
     const response = await fetch('/api/JobAppSteps/' + board._id, {
       method: 'DELETE'

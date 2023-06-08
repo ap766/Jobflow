@@ -1,3 +1,4 @@
+//This is equivalent to home of the wkb
 import { useEffect} from "react"
 import PropTypes from 'prop-types';
 import BoardDetails from "../components/BoardDetails"
