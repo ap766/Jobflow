@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { useAuthContext } from '../hooks/useAuthContext'
 //new import
 import { useBoardsContext } from '../hooks/useBoardsContext'
 const NewDashBoard = () => {//this new
 
 const { dispatch } = useBoardsContext()
+const { user } = useAuthContext()
 
   const [title, setTitle] = useState('')
   const [interestedjobs, setLoad] = useState('')
@@ -15,13 +17,19 @@ const { dispatch } = useBoardsContext()
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+     if (!user) {
+      setError('You must be logged in')
+      return
+    }
+
     const workout = {title, interestedjobs, applied}
     
     const response = await fetch('/api/JobAppSteps', {
       method: 'POST',
       body: JSON.stringify(workout),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`
       }
     })
     const json = await response.json()

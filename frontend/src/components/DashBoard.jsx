@@ -1,17 +1,23 @@
 //This is equivalent to home of the wkb
 import { useEffect} from "react"
+
 import PropTypes from 'prop-types';
 import BoardDetails from "../components/BoardDetails"
 import NewDashBoard from "./NewDashBoard";
 import { useBoardsContext } from "../hooks/useBoardsContext";
 
+import { useAuthContext } from "../hooks/useAuthContext"
+
 const DashBoard = () => {
   //const [boards, setBoards] = useState(null)
   const { boards, dispatch } = useBoardsContext()//you can see why we need 2..cus we display boards
+    const {user} = useAuthContext()
 
   useEffect(() => {
     const fetchBoards = async () => {
-      const response = await fetch("/api/JobAppSteps")//here instead of it being like http://localhost/4000 it proxies the browser requests to 4000 to prevent cors, instead f at 3000.
+      const response = await fetch("/api/JobAppSteps", {
+        headers: {'Authorization': `Bearer ${user.token}`},
+      })//here instead of it being like http://localhost/4000 it proxies the browser requests to 4000 to prevent cors, instead f at 3000.
       const json = await response.json()
 
       if (response.ok) {
@@ -20,9 +26,10 @@ const DashBoard = () => {
        dispatch({type: 'SET_BOARDS', payload: json})
       }
     }
-
+ if(user){
     fetchBoards()
-  }, [dispatch])//this [] but new now
+ }
+  }, [dispatch,user])//this [] but new now
 
   return (
     <div className="home">
