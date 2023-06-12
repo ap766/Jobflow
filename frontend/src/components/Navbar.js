@@ -9,19 +9,32 @@ const Navbar = () => {
   const handleClick = () => {
     logout()
   }
-
+ 
   return (
     <header>
       <div className="container">
-        <Link to="/">
+        <Link to="/home">
           <h1>JobFlow</h1>
         </Link>
         <nav>
           {user && (
+
+<>
             <div>
-              <span>{user.email}</span>
+                   <span class="email">{user.email}</span>
               <button onClick={handleClick}>Log out</button>
             </div>
+            
+            <div>
+              <Link to="/">
+               <img class="dashboard-link" src={require('./profile-user.png')}alt="dashboard" />
+              </Link>
+         
+            </div>
+            
+            </>
+
+            
           )}
           {!user && (
             <div>

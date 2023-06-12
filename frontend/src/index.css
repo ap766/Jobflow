@@ -116,6 +116,7 @@ nav button {
   font-family: "Poppins";
   cursor: pointer;
   font-size: 1em;
+
 }
 /* auth forms */
 form.signup, form.login {
@@ -124,4 +125,30 @@ form.signup, form.login {
   padding: 20px;
   background: #fff;
   border-radius: 4px;
+}
+.dashboard-link{
+  
+  color: rgb(130, 116, 169);
+  height:42px;
+  width:42px;
+
+}
+.girl{
+
+  height:450px;
+  width:450px;
+  border-radius: 50%;
+}
+.HomeDisplay{
+   display: flex; /* Use flexbox for a flexible layout */
+  align-items: center; 
+   flex-direction: column;
+}
+
+  h11{
+  font-size: 32px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 50px;
+  margin-top: 50px;
 }

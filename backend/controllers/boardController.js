@@ -2,8 +2,10 @@ const Bd = require('../models/BoardModel')
 const mongoose = require('mongoose')
 
 // get all workouts
+
 const getBoards = async (req, res) => {
-  const boardss = await Bd.find({}).sort({createdAt: -1})
+  const user_id = req.user._id
+  const boardss = await Bd.find({user_id}).sort({createdAt: -1})
 
   res.status(200).json(boardss)
 }
@@ -44,7 +46,8 @@ const createBoard = async (req, res) => {
 
   // add to the database
   try {
-    const workout = await Bd.create({ title, interestedjobs, applied})
+    const user_id = req.user._id//Added this at this
+    const workout = await Bd.create({ title, interestedjobs, applied,user_id})//here too at last the user_id .. in the table too
     res.status(200).json(workout)
   } catch (error) {
     res.status(400).json({ error: error.message })
