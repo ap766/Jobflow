@@ -1,6 +1,6 @@
 # Jobflow
 Jobflow is a web application that helps users manage their job applications effectively.
-##Tech Stack
+## Tech Stack
 + Frontend - Reactjs,HTML,CSS
 + Backend - Nodejs,Expressjs,Mongodb
 ## Features
