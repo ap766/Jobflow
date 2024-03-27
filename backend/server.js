@@ -1,8 +1,8 @@
 
 require('dotenv').config()
-
 const express = require('express')
 const mongoose = require('mongoose')
+
 const JobBoard = require('./routes/JobAppSteps')
 const userRoutes = require('./routes/user')
 

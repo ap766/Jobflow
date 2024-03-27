@@ -6,7 +6,7 @@ const {
   deleteBoard, 
   updateBoard
 } = require('../controllers/boardController')
-
+ 
 const requireAuth = require('../middleware/requireAuth')
 const router = express.Router()
 

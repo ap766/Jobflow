@@ -1,14 +1,17 @@
 const Bd = require('../models/BoardModel')
+
 const mongoose = require('mongoose')
 
 // get all workouts
 
 const getBoards = async (req, res) => {
+  
+  
   const user_id = req.user._id
   const boardss = await Bd.find({user_id}).sort({createdAt: -1})
-
   res.status(200).json(boardss)
 }
+
 
 // get a single workout
 const getBoard= async (req, res) => {
@@ -27,8 +30,14 @@ const getBoard= async (req, res) => {
   res.status(200).json(workout)
 }
 
+
+
 // create a new workout
 const createBoard = async (req, res) => {
+  console.log(req.body)
+  console.log("hey")
+  
+
   const {title, interestedjobs, applied} = req.body
    let emptyFields = []
    if (!title) {
@@ -44,9 +53,12 @@ const createBoard = async (req, res) => {
     return res.status(400).json({ error: 'Please fill in all fields', emptyFields })
   }
 
-  // add to the database
+
+ // add to the database
   try {
     const user_id = req.user._id//Added this at this
+    //show req.user to see what it is and what it has
+    console.log(req.user)
     const workout = await Bd.create({ title, interestedjobs, applied,user_id})//here too at last the user_id .. in the table too
     res.status(200).json(workout)
   } catch (error) {
@@ -58,6 +70,10 @@ const createBoard = async (req, res) => {
 // delete a workout
 const deleteBoard = async (req, res) => {
   const { id } = req.params
+  
+  console.log("hola")
+  console.log(req.user)
+  console.log(req.body)
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({error: 'No such workout'})
