@@ -33,4 +33,3 @@ Jobflow is a web application that helps users manage their job applications effe
 
 
 With this application, users can easily organize and track their job applications, ensuring a streamlined and efficient job search process.
->>>>>>> c5158f88 (initial kanban board)
