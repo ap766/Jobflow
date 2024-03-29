@@ -6,7 +6,6 @@ const mongoose = require('mongoose')
 
 const getBoards = async (req, res) => {
   
-  
   const user_id = req.user._id
   const boardss = await Bd.find({user_id}).sort({createdAt: -1})
   res.status(200).json(boardss)
@@ -37,7 +36,6 @@ const createBoard = async (req, res) => {
   console.log(req.body)
   console.log("hey")
   
-
   const {title, interestedjobs, applied} = req.body
    let emptyFields = []
    if (!title) {

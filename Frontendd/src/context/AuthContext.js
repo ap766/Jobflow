@@ -17,6 +17,8 @@ export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, { 
     user: null
   })
+
+  
 //We are checking if the item-token is in local storage and yes executed only once when initially rendered cus []
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'))

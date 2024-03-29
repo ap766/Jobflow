@@ -1,0 +1,34 @@
+const express = require('express')
+const {
+  getBoards, 
+  getBoard, 
+  createBoard, 
+  deleteBoard, 
+  updateBoard
+} = require('../controllers/boardController')
+ 
+const requireAuth = require('../middleware/requireAuth')
+const router = express.Router()
+
+// require auth for all routes
+router.use(requireAuth)
+
+//not required all boards
+
+router.get('/', getBoards)
+
+// GET the whole board for single title
+
+router.get('/:id', getBoard)
+
+// POST a new entry of kanban table
+
+router.post('/', createBoard)
+
+// DELETE a workout
+router.delete('/:id', deleteBoard)
+
+// UPDATE a workout
+router.patch('/:id', updateBoard)
+
+module.exports = router

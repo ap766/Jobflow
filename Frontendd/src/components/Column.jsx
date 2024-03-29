@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Task from "./Task";
 import "./scroll.css";
+import TaskContext from "../context/TaskContext";
 import { Droppable } from "react-beautiful-dnd";
 
 const AddButton = styled.button`
@@ -43,12 +44,16 @@ const TaskList = styled.div`
 `;
 
 export default function Column({ title, tasks, id }) {
+    const { completed,setCompleted,incomplete,setIncomplete,backlog,setBacklog,inReview,setInReview } = React.useContext(TaskContext);
+    console.log("these are the tasks")
+    console.log(tasks)
+    console.log(title)
     const handleAddButtonClick = () => {
-        // Add your logic here for what should happen when the "+" button is clicked
-        //I want a new entry to be added to database
-        
-        console.log("Add button clicked!");
-    };
+
+        console.log("hi")
+    
+    } 
+
 
     return (
         <Container className="column">
@@ -60,6 +65,7 @@ export default function Column({ title, tasks, id }) {
                 }}
             >
                 {title}
+
                  {/* + Button */}
                  <AddButton onClick={handleAddButtonClick}> + </AddButton>
             </Title>
@@ -70,13 +76,17 @@ export default function Column({ title, tasks, id }) {
                         {...provided.droppableProps}
                         isDraggingOver={snapshot.isDraggingOver}
                     >
+
                         {tasks.map((task, index) => (
                             <Task key={index} index={index} task={task} />
                         ))}
+
+
                         {provided.placeholder}
                     </TaskList>
                 )}
             </Droppable>
         </Container>
     );
+
 }

@@ -39,6 +39,8 @@ function bgcolorChange(props) {
 }
 
 export default function Task({ task, index }) {
+    console.log("eeeeeeTask");
+    console.log(task);
     return (
         <Draggable draggableId={`${task.id}`} key={task.id} index={index}>
             {(provided, snapshot) => (
