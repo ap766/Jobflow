@@ -49,10 +49,32 @@ export default function Column({ title, tasks, id }) {
     console.log(tasks)
     console.log(title)
     const handleAddButtonClick = () => {
-
-        console.log("hi")
+        // Create a new task object with a unique ID and default title
+        const newTask = {
+            id: tasks.length + 1, // Assuming IDs are incremental
+            title: "Untitled",
+            completed: false, // Assuming default is incomplete
+        };
     
-    } 
+        // Depending on the column's ID, update the corresponding state
+        switch (id) {
+            case "1": // INTERESTED
+                setIncomplete(prevIncomplete => [newTask, ...prevIncomplete]);
+                break;
+            case "2": // APPLIED
+                setCompleted(prevCompleted => [newTask, ...prevCompleted]);
+                break;
+            case "3": // ROUNDS/INTERVIEWS
+                setInReview(prevInReview => [newTask, ...prevInReview]);
+                break;
+            case "4": // HEARDBACK
+                setBacklog(prevBacklog => [newTask, ...prevBacklog]);
+                break;
+            default:
+                break;
+        }
+    };
+    
 
 
     return (
@@ -79,7 +101,7 @@ export default function Column({ title, tasks, id }) {
 
                         {tasks.map((task, index) => (
                             <Task key={index} index={index} task={task} />
-                        ))}
+                        ))} 
 
 
                         {provided.placeholder}
