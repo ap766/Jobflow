@@ -130,10 +130,11 @@ import React, { useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import TaskContext from "../context/TaskContext";
 import Column from "./Column";
+import Sidebar from "./Sidebar";
 
-export default function Kanban() {
+export default function Combined() {
     const { completed, setCompleted, incomplete, setIncomplete, backlog, setBacklog, inReview, setInReview } = React.useContext(TaskContext);
-
+    
     useEffect(() => {
         const fetchData = async () => {
             console.log("Fetching data...");
@@ -211,35 +212,39 @@ export default function Kanban() {
         }
     }
     
-         
-     function findItemById(id, array) {
+    function findItemById(id, array) {
         return array.find((item) => item.id == id);
-     }
+    }
 
-     function removeItemById(id, array) {
-         return array.filter((item) => item.id != id);
-     }
-
+    function removeItemById(id, array) {
+        return array.filter((item) => item.id != id);
+    }
 
     return (
-        <DragDropContext onDragEnd={handleDragEnd}>
-            <h2 style={{ textAlign: "center" }}>PROGRESS BOARD</h2>
-            <div
-                style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    flexDirection: "row",
-                    width: "1300px",
-                    margin: "0 auto"
-                }}
-            > 
-                
-                <Column title={"INTERESTED"} tasks={incomplete} id={"1"} />
-                <Column title={"APPLIED"} tasks={completed} id={"2"} />
-                <Column title={"ROUNDS/INTERVIEWS"} tasks={inReview} id={"3"} />
-                <Column title={"HEARDBACK"} tasks={backlog} id={"4"} />
-            </div>
-        </DragDropContext>
+        <div style={{ display: "flex" }}>
+            <Sidebar  />
+            <DragDropContext onDragEnd={handleDragEnd}>
+                <div>
+                <h2 style={{ textAlign: "center" }}>PROGRESS BOARD</h2>
+                <div
+                   
+                       style={{
+                           display: "flex",
+                           justifyContent: "space-between",
+                           alignItems: "center",
+                           flexDirection: "row",
+                           width: "1300px",
+                           margin: "0 auto"
+                       }}
+               
+                > 
+                    <Column title={"INTERESTED"} tasks={incomplete} id={"1"} />
+                    <Column title={"APPLIED"} tasks={completed} id={"2"} />
+                    <Column title={"ROUNDS/INTERVIEWS"} tasks={inReview} id={"3"} />
+                    <Column title={"HEARDBACK"} tasks={backlog} id={"4"} />
+                </div>
+                </div>
+            </DragDropContext>
+        </div>
     );
 }

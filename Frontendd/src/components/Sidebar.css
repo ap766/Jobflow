@@ -1,0 +1,32 @@
+.sidebar {
+    width: 200px;
+    height: 100vh; /* Adjust as needed */
+    background-color: #f4f4f4;
+    margin: 0; /* Remove any default margin */
+    padding: 0; /* Remove any default padding */
+}
+
+.sidebar-header {
+    background-color: rgb(188, 244, 255);
+    color: #040006;
+    padding: 10px;
+}
+
+.sidebar-content {
+    padding: 10px;
+}
+
+.sidebar-content ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar-content ul li {
+    padding: 8px 0;
+    cursor: pointer;
+}
+
+.sidebar-content ul li.active {
+    font-weight: bold;
+    color: #333;
+}
