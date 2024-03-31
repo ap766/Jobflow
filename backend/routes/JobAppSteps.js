@@ -1,11 +1,13 @@
 const express = require('express')
 const {
-  getBoards, 
-  getBoard, 
-  createBoard, 
-  deleteBoard, 
-  updateBoard
-} = require('../controllers/boardController')
+  
+  getJobs,
+  getJob,
+  createJob,
+  deleteJob,
+  updateJob
+} = require('../controllers/JobController')
+
  
 const requireAuth = require('../middleware/requireAuth')
 const router = express.Router()
@@ -13,18 +15,18 @@ const router = express.Router()
 // require auth for all routes
 router.use(requireAuth)
 
-router.get('/', getBoards)
+router.get('/', getJobs)
 
 // GET a single workout
-router.get('/:id', getBoard)
+router.get('/:id', getJob)
 
 // POST a new workout
-router.post('/', createBoard)
+router.post('/', createJob)
 
 // DELETE a workout
-router.delete('/:id', deleteBoard)
+router.delete('/:id', deleteJob)
 
 // UPDATE a workout
-router.patch('/:id', updateBoard)
+router.patch('/:id', updateJob)
 
 module.exports = router
