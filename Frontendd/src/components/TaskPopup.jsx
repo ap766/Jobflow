@@ -16,34 +16,37 @@ export default function TaskPopup({ isOpen, task, column }) {
     const [editedTitle, setEditedTitle] = useState(task.title);
     const [editedDetails, setEditedDetails] = useState(task.details);
 
-    const handleSave = () => {
-        console.log("Saving...")
+    const handleSave = async () => {
+        console.log("Saving...");
         // Determine the column of the edited task
         // Update the state based on the column
         switch (column) {
+            
             case "INTERESTED":
-                setCompleted((prevCompleted) => [
-                    ...prevCompleted.map((item) =>
-                        item.id === task.id ? { ...item, title: editedTitle, details: editedDetails } : item
-                    )
-                ]);
-                break;
-            case "APPLIED":
-                setIncomplete((prevIncomplete) => [
+                console.log("INTERESTED INNNNN")
+                await setIncomplete((prevIncomplete) => [
                     ...prevIncomplete.map((item) =>
                         item.id === task.id ? { ...item, title: editedTitle, details: editedDetails } : item
                     )
                 ]);
                 break;
+                case "APPLIED":
+                await setCompleted((prevcomplete) => [
+                    ...prevcomplete.map((item) =>
+                        item.id === task.id ? { ...item, title: editedTitle, details: editedDetails } : item
+                    )
+                ]);
+                break;
             case "ROUNDS/INTERVIEWS":
-                setBacklog((prevBacklog) => [
+                
+                await setBacklog((prevBacklog) => [
                     ...prevBacklog.map((item) =>
                         item.id === task.id ? { ...item, title: editedTitle, details: editedDetails } : item
                     )
                 ]);
                 break;
             case "HEARDBACK":
-                setInReview((prevInReview) => [
+                await setInReview((prevInReview) => [
                     ...prevInReview.map((item) =>
                         item.id === task.id ? { ...item, title: editedTitle, details: editedDetails } : item
                     )
@@ -52,8 +55,10 @@ export default function TaskPopup({ isOpen, task, column }) {
             default:
                 break;
         }
+        console.log("Save operation completed.");
+        console.log(incomplete)
     };
-
+    
     return (
         <Popup open={isOpen} modal>
             <EditBox>
