@@ -100,7 +100,7 @@ export default function Column({ title, tasks, id }) {
                     >
 
                         {tasks.map((task, index) => (
-                            <Task key={index} index={index} task={task} />
+                            <Task key={index} index={index} task={task} column={title}/>
                         ))} 
 
 
