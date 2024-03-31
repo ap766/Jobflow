@@ -19,19 +19,19 @@ const Sidebar = () => {
             className={active === 'Learn Python' ? 'active' : ''}
             onClick={() => handleClick('Learn Python')}
           >
-            Learn Python
+            Summer 2023 Internship Search
           </li>
           <li
             className={active === '日本語を勉強します' ? 'active' : ''}
             onClick={() => handleClick('日本語を勉強します')}
           >
-            日本語を勉強します
+           Winter 2023 Internship Search
           </li>
           <li
             className={active === 'Learn JavaScript' ? 'active' : ''}
             onClick={() => handleClick('Learn JavaScript')}
           >
-            Learn JavaScript
+            Summer 2024 Internship Search
           </li>
         </ul>
       </div>

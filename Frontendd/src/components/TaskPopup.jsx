@@ -4,12 +4,33 @@ import styled from "styled-components";
 import TaskContext from "../context/TaskContext";
 
 const EditBox = styled.div`
-    padding: 8px;
-    border-radius: 8px;
+    padding: 20px; /* Reduced padding for better layout */
+    border-radius: 12px;
     background-color: #ffffff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    position: relative;
+    top: 20px;
+    display: flex;
+    flex-direction: column;
 `;
 
+const InputField = styled.input`
+    width: 80%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+`;
+
+const TextAreaField = styled.textarea`
+    width: 80%;
+    height: 100px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5; /* Slightly lighter background for textarea */
+`;
 export default function TaskPopup({ isOpen, task, column }) {
     console.log("TASK POP")
     const { completed, setCompleted, incomplete, setIncomplete, backlog, setBacklog, inReview, setInReview } = React.useContext(TaskContext);
@@ -62,13 +83,13 @@ export default function TaskPopup({ isOpen, task, column }) {
     return (
         <Popup open={isOpen} modal>
             <EditBox>
-                <input
+                <InputField
                     type="text"
                     value={editedTitle}
                     onChange={(e) => setEditedTitle(e.target.value)}
                     autoFocus
                 />
-                <textarea
+                <TextAreaField
                     value={editedDetails}
                     onChange={(e) => setEditedDetails(e.target.value)}
                     placeholder="Enter details..."
