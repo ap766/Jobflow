@@ -50,40 +50,36 @@ const createJob= async (req, res) => {
 }
 
 
-// delete a workout
-const deleteJob= async (req, res) => {
-  const { id } = req.params
+const deleteJob = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user_id = req.user._id;
+    console.log("heijjji")
+    console.log(id)
 
+    // Find and delete the job
+    const job = await Jb.findOneAndDelete({ id: id, user_id: user_id });
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({error: 'No such Job'})
+    // If job is successfully deleted, send a success response
+    res.status(200).json(job);
+  } catch (error) {
+    // Handle any errors that occur during the process
+    console.error('Error deleting job:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
+};
 
-  const job = await Jb.findOneAndDelete({_id: id})
-
-  if(!job) {
-    return res.status(400).json({error: 'No such job'})
-  }
-
-  res.status(200).json(job)
-}
-
-// update a workout
 const updateJob = async (req, res) => {
 
   //THIS I HAVE SOME DOUBT 
-  const { ID } = req.params
+  const { id } = req.params
+  const user_id = req.user._id;
 
-  console.log(ID)
+  console.log(id)
   console.log(req.body)
-  
- const query = { id: { $exists: true, $eq: ID} };
- const result = await Jb.find(query);
- console.log(result)
-
 
 //ig const {title, load, reps} = req.body.. and then those three would also work this is shortcut
-  const jb = await Jb.findOneAndUpdate({id: ID}, {
+  const jb = await Jb.findOneAndUpdate({id: id,user_id:user_id}, {
     ...req.body
   })
 
@@ -93,6 +89,7 @@ const updateJob = async (req, res) => {
 
   res.status(200).json(jb)
 }
+
 
 module.exports = { 
   getJobs,

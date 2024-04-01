@@ -82,7 +82,9 @@ export default function TaskPopup({ ID,isOpen, task, column }) {
         }
     
         try {
-            const response = await fetch(`/api/JobAppSteps/${task.id}`, {
+            console.log("Updating task...")
+            console.log(task.id)
+            const response = await fetch(`/api/JobAppSteps/${ID}`, {
                 method: 'PATCH', // or 'PUT'
                 headers: {
                     'Content-Type': 'application/json',

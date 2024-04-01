@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import React from "react";
 import styled from "styled-components";
 import Task from "./Task";
@@ -55,11 +56,12 @@ export default function Column({ title, tasks, id }) {
     console.log(title)
 
     const handleAddButtonClick = async () => {
+        const newId = uuidv4();
         // Create a new task object with a unique ID and default title
         const newTask = {
             title: "Untitled",     
             section: title,
-            id: tasks.length + 1,
+            id: newId
             // Assuming default is incomplete
         };
     console.log("heiii")

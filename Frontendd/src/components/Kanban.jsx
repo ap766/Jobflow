@@ -18,21 +18,36 @@ export default function Kanban() {
         const fetchData = async () => {
             console.log("Fetching data...");
             try {
-                const response = await fetch("https://jsonplaceholder.typicode.com/todos");
+                const response = await fetch("api/JobAppSteps/", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${user.token}`,
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error("Failed to fetch data");
+                }
                 const json = await response.json();
-                const completedTasks = json.filter((task) => task.completed);
-                const incompleteTasks = json.filter((task) => !task.completed);
-                console.log("Completed Tasks:", completedTasks);
-                console.log("Incomplete Tasks:", incompleteTasks);
-                setCompleted(completedTasks);
-                setIncomplete(incompleteTasks);
+                // Filter the JSON data based on a particular value in a column
+                    let interested = json.filter((task) => task.section == "INTERESTED");
+            let applied = json.filter((task) => task.section == "APPLIED");
+            let rounds = json.filter((task) => task.section == "ROUNDS/INTERVIEWS");
+            let heardBack = json.filter((task) => task.section =="HEARDBACK");
+            // Set the filtered data to state
+            setIncomplete(interested);
+            setCompleted(applied);
+            setBacklog(rounds);
+            setInReview(heardBack);
+
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         };
-
+    
         fetchData(); // Call the async function
-    }, []);
+    }, [user.token, setIncomplete, setCompleted, setBacklog, setInReview]);
+    
 
     useEffect(() => {
         console.log('Updated Completed:', completed);

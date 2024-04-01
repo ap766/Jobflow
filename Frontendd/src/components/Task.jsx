@@ -4,6 +4,8 @@ import TaskContext from "../context/TaskContext";
 import styled from "styled-components";
 import { DeleteOutlined } from "@ant-design/icons"; // Importing the delete icon from Ant Design
 import TaskPopup from "./TaskPopup";
+import { useAuthContext } from "../hooks/useAuthContext"
+
 
 const Container = styled.div`
   border-radius: 10px;
@@ -42,6 +44,7 @@ function bgcolorChange(props) {
 }
 
 export default function Task({ task, index, onSave, column }) {
+  const {user} = useAuthContext()
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(task.title);
   const [editedDetails, setEditedDetails] = useState(task.details);
@@ -49,24 +52,42 @@ export default function Task({ task, index, onSave, column }) {
   const handleDoubleClick = () => {
     setIsEditing(true);
   };
-
-  const handleDelete = (columnName) => {
-    // Implement delete functionality here, with access to the column name
-    switch (columnName){
-        case "INTERESTED":
-            setIncomplete((prevIncomplete) => prevIncomplete.filter((item) => item.id !== task.id));
-            break;
-        case "COMPLETED":
-            setCompleted((prevComplete) => prevComplete.filter((item) => item.id !== task.id));
-            break;
-        case "IN REVIEW":
-            setInReview((prevReview) => prevReview.filter((item) => item.id !== task.id));
-            break;
-        case "BACKLOG":
-            setBacklog((prevBacklog) => prevBacklog.filter((item) => item.id !== task.id));
-            break;
-    }    
+  const handleDelete = async () => {
+    // Implement delete functionality here
+    switch (column) {
+      case "INTERESTED":
+        setIncomplete((prevIncomplete) => prevIncomplete.filter((item) => item.id !== task.id));
+        break;
+      case "APPLIED":
+        setCompleted((prevComplete) => prevComplete.filter((item) => item.id !== task.id));
+        break;
+      case "ROUNDS/INTERVIEWS":
+        setInReview((prevReview) => prevReview.filter((item) => item.id !== task.id));
+        break;
+      case "HEARDBACK":
+        setBacklog((prevBacklog) => prevBacklog.filter((item) => item.id !== task.id));
+        break;
+      default:
+        break;
+    }
+  
+    // Call API to delete the task
+    try {
+      const response = await fetch(`/api/JobAppSteps/${task.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${user.token}` // Include user token in the header
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete task");
+      }
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
   };
+  
 
   return (
     <>
@@ -93,7 +114,7 @@ export default function Task({ task, index, onSave, column }) {
               </div>
               <Icons>
                 <div>
-                  <DeleteOutlined onClick={() => handleDelete(column)} style={{ color: "red", fontSize: "20px", cursor: "pointer" }} />
+                <DeleteOutlined onClick={handleDelete} style={{ color: "red", fontSize: "20px", cursor: "pointer" }} />
                 </div>
               </Icons>
               {provided.placeholder}
