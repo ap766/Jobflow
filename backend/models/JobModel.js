@@ -29,7 +29,7 @@ const jobSchema = new Schema({
   },
   status:{
     type: String,
-    required: true
+    required: false
   },
    user_id: {
     type: String,
@@ -42,7 +42,11 @@ const jobSchema = new Schema({
   },
   board_id:{
     type: String,
-    required: true
+    required: false
+  },
+  id:{
+    type: String,
+    required: false
   }
 
 }, { timestamps: true })

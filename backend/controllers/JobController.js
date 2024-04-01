@@ -29,24 +29,21 @@ const getJob= async (req, res) => {
 
 // create a new workout
 const createJob= async (req, res) => {
-  console.log(req.body)
-  console.log("hey")
-   //CUS WE COULD DIRECTLY CREATE IN 3RD COLUMN
-  title="Untitled"
-  description="No Description"
-  joblink="No Link"
-  roundtiming="None"
-  status="None"
-  phone_number="None"
-  const {title,description,joblink,roundtiming,status,phone_number} = req.body
-  
+  console.log(req)
+  const { title, section,id } = req.body;
+
+  console.log(title)
+  console.log(section)
+  console.log(req.user._id)
  // add to the database
   try {
     const user_id = req.user._id//Added this at this
     //show req.user to see what it is and what it has
     console.log(req.user)
-    const jb = await Jb.create({ title,description,joblink,roundtiming,status,boardid,user_id,phone_number})//here too at last the user_id .. in the table too
-    res.status(200).json(workout)
+    // const jb = await Jb.create({ title,description,joblink,roundtiming,status,boardid,user_id,phone_number,id})//here too at last the user_id .. in the table too
+    const jb = await Jb.create({ title,section,user_id,id})//here too at last the user_id .. in the table too
+    console.log("hello")
+    res.status(200).json(jb)
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
@@ -77,11 +74,15 @@ const updateJob = async (req, res) => {
   //THIS I HAVE SOME DOUBT 
   const { id } = req.params
 
+  console.log(id)
+  console.log(req.body)
+  
+
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({error: 'No such workout'})
   }
 //ig const {title, load, reps} = req.body.. and then those three would also work this is shortcut
-  const jb = await Jb.findOneAndUpdate({_id: id}, {
+  const jb = await Jb.findOneAndUpdate({id: id}, {
     ...req.body
   })
 

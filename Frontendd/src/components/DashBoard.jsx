@@ -14,7 +14,7 @@ const DashBoard = () => {
 
   useEffect(() => {
 
-
+    
     const fetchBoards = async () => {
       const response = await fetch("/api/JobAppSteps", {
         headers: {'Authorization': `Bearer ${user.token}`},

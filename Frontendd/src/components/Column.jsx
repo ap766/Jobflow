@@ -4,6 +4,9 @@ import Task from "./Task";
 import "./scroll.css";
 import TaskContext from "../context/TaskContext";
 import { Droppable } from "react-beautiful-dnd";
+import { useAuthContext } from "../hooks/useAuthContext"
+
+
 
 const AddButton = styled.button`
     position: absolute;
@@ -44,18 +47,23 @@ const TaskList = styled.div`
 `;
 
 export default function Column({ title, tasks, id }) {
+    //the header id refers to for the column
+    const {user} = useAuthContext()
     const { completed,setCompleted,incomplete,setIncomplete,backlog,setBacklog,inReview,setInReview } = React.useContext(TaskContext);
     console.log("these are the tasks")
     console.log(tasks)
     console.log(title)
-    const handleAddButtonClick = () => {
+
+    const handleAddButtonClick = async () => {
         // Create a new task object with a unique ID and default title
         const newTask = {
-            id: tasks.length + 1, // Assuming IDs are incremental
             title: "Untitled",
-            completed: false, // Assuming default is incomplete
+           
+            section: title,
+            id: tasks.length + 1,
+            // Assuming default is incomplete
         };
-    
+    console.log("heiii")
         // Depending on the column's ID, update the corresponding state
         switch (id) {
             case "1": // INTERESTED
@@ -72,6 +80,26 @@ export default function Column({ title, tasks, id }) {
                 break;
             default:
                 break;
+        }
+    
+ console.log("Hello we are here in the add button click");
+        try {
+            const response = await fetch("/api/JobAppSteps/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${user.token}` // Include user token in the header
+                },
+                
+                body: JSON.stringify(newTask) // Convert newTask to JSON string
+            });
+    
+            if (!response.ok) {
+                throw new Error("Failed to add new task");
+            }
+        } catch (error) {
+            console.log("ERROR LAND")
+            console.error("Error adding new task:", error);
         }
     };
     

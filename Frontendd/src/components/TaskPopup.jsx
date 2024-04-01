@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Popup from "reactjs-popup";
 import styled from "styled-components";
 import TaskContext from "../context/TaskContext";
+import { useAuthContext } from "../hooks/useAuthContext"
+
 
 const EditBox = styled.div`
     padding: 20px; /* Reduced padding for better layout */
@@ -32,34 +34,34 @@ const TextAreaField = styled.textarea`
     background-color: #f5f5f5; /* Slightly lighter background for textarea */
 `;
 export default function TaskPopup({ isOpen, task, column }) {
+    const {user} = useAuthContext()
     console.log("TASK POP")
     const { completed, setCompleted, incomplete, setIncomplete, backlog, setBacklog, inReview, setInReview } = React.useContext(TaskContext);
     const [editedTitle, setEditedTitle] = useState(task.title);
     const [editedDetails, setEditedDetails] = useState(task.details);
-
     const handleSave = async () => {
+        console.log("IDDDD")
+        console.log(task.id)
         console.log("Saving...");
+    
         // Determine the column of the edited task
         // Update the state based on the column
         switch (column) {
-            
             case "INTERESTED":
-                console.log("INTERESTED INNNNN")
                 await setIncomplete((prevIncomplete) => [
                     ...prevIncomplete.map((item) =>
-                        item.id === task.id ? { ...item, title: editedTitle, details: editedDetails } : item
+                        item.id === task.id ? { ...item, title: editedTitle, details: editedDetails} : item
                     )
                 ]);
                 break;
-                case "APPLIED":
-                await setCompleted((prevcomplete) => [
-                    ...prevcomplete.map((item) =>
+            case "APPLIED":
+                await setCompleted((prevComplete) => [
+                    ...prevComplete.map((item) =>
                         item.id === task.id ? { ...item, title: editedTitle, details: editedDetails } : item
                     )
                 ]);
                 break;
             case "ROUNDS/INTERVIEWS":
-                
                 await setBacklog((prevBacklog) => [
                     ...prevBacklog.map((item) =>
                         item.id === task.id ? { ...item, title: editedTitle, details: editedDetails } : item
@@ -76,9 +78,29 @@ export default function TaskPopup({ isOpen, task, column }) {
             default:
                 break;
         }
+    
+        try {
+            const response = await fetch(`/api/JobAppSteps/${task.id}`, {
+                method: 'PATCH', // or 'PUT'
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                },
+                body: JSON.stringify({ title: editedTitle, description: editedDetails,section:column })
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to update task');
+            }
+            
+            console.log("Task updated successfully.");
+        } catch (error) {
+            console.error('Error updating task:', error);
+        }
+        
         console.log("Save operation completed.");
-        console.log(incomplete)
     };
+    
     
     return (
         <Popup open={isOpen} modal>

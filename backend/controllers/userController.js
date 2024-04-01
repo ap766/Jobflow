@@ -12,7 +12,7 @@ const createToken = (_id) => {
 
 // login a user
 const loginUser = async (req, res) => {
-  console.log(req)
+  console.log(req.body)
   const {email, password} = req.body
   try {
     const user = await User.login(email, password)

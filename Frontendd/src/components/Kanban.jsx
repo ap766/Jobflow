@@ -1,10 +1,18 @@
 
+//set brds as it is global state variable
+//SETLATEST BOARD (ALSO ACTIVATE THAT IN BOARDSJS)
+//CLICK ON AGAIN GET BUT THE ID OF THE LATEST ONE 
+
 import React, { useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import TaskContext from "../context/TaskContext";
 import Column from "./Column";
+import { useAuthContext } from "../hooks/useAuthContext";
+
 
 export default function Kanban() {
+      const { user } = useAuthContext();
+
     const { completed, setCompleted, incomplete, setIncomplete, backlog, setBacklog, inReview, setInReview } = React.useContext(TaskContext);
     useEffect(() => {
         const fetchData = async () => {
