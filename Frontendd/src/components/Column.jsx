@@ -57,8 +57,7 @@ export default function Column({ title, tasks, id }) {
     const handleAddButtonClick = async () => {
         // Create a new task object with a unique ID and default title
         const newTask = {
-            title: "Untitled",
-           
+            title: "Untitled",     
             section: title,
             id: tasks.length + 1,
             // Assuming default is incomplete

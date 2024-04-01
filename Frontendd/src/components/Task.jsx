@@ -104,6 +104,7 @@ export default function Task({ task, index, onSave, column }) {
 
       {isEditing && (
         <TaskPopup
+         ID={task.id}
           isOpen={isEditing}
           task={task}
           column={column}

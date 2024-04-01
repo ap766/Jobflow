@@ -33,8 +33,10 @@ const TextAreaField = styled.textarea`
     border: 1px solid #ccc;
     background-color: #f5f5f5; /* Slightly lighter background for textarea */
 `;
-export default function TaskPopup({ isOpen, task, column }) {
+export default function TaskPopup({ ID,isOpen, task, column }) {
     const {user} = useAuthContext()
+    console.log("The id is")
+    console.log(ID)
     console.log("TASK POP")
     const { completed, setCompleted, incomplete, setIncomplete, backlog, setBacklog, inReview, setInReview } = React.useContext(TaskContext);
     const [editedTitle, setEditedTitle] = useState(task.title);
@@ -86,7 +88,7 @@ export default function TaskPopup({ isOpen, task, column }) {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${user.token}`
                 },
-                body: JSON.stringify({ title: editedTitle, description: editedDetails,section:column })
+                body: JSON.stringify({ title: editedTitle, description: editedDetails,section:column,id:ID })
             });
     
             if (!response.ok) {

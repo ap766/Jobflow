@@ -72,17 +72,18 @@ const deleteJob= async (req, res) => {
 const updateJob = async (req, res) => {
 
   //THIS I HAVE SOME DOUBT 
-  const { id } = req.params
+  const { ID } = req.params
 
-  console.log(id)
+  console.log(ID)
   console.log(req.body)
   
+ const query = { id: { $exists: true, $eq: ID} };
+ const result = await Jb.find(query);
+ console.log(result)
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({error: 'No such workout'})
-  }
+
 //ig const {title, load, reps} = req.body.. and then those three would also work this is shortcut
-  const jb = await Jb.findOneAndUpdate({id: id}, {
+  const jb = await Jb.findOneAndUpdate({id: ID}, {
     ...req.body
   })
 
