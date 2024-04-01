@@ -1,6 +1,10 @@
 const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 
+//id is payload
+//For example, if you're using the jsonwebtoken library in Node.js, the default algorithm used for signing tokens is HS256 for symmetric signing when a secret key is provided, and RS256 for asymmetric signing when a private key is provided.
+
+
 const createToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
 }
@@ -37,4 +41,5 @@ const signupUser = async (req, res) => {
   }
 }
 
+//In JavaScript, the module object is a special object available in Node.js environments that represents the current module.
 module.exports = { signupUser, loginUser }

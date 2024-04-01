@@ -1,14 +1,11 @@
 
-
 import React, { useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import TaskContext from "../context/TaskContext";
 import Column from "./Column";
-import Sidebar from "./Sidebar";
 
-export default function Combined() {
+export default function Kanban() {
     const { completed, setCompleted, incomplete, setIncomplete, backlog, setBacklog, inReview, setInReview } = React.useContext(TaskContext);
-    
     useEffect(() => {
         const fetchData = async () => {
             console.log("Fetching data...");
@@ -96,7 +93,6 @@ export default function Combined() {
 
     return (
         <div style={{ display: "flex" }}>
-            <Sidebar  />
             <DragDropContext onDragEnd={handleDragEnd}>
                 <div>
                 <h2 style={{ textAlign: "center" }}>PROGRESS BOARD</h2>

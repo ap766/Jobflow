@@ -1,25 +1,14 @@
-//No pt of this
+import React from 'react';
 
-
-
-//need to make a go to dashboard buttonif user had logged/signed in
-export const Home = () => {
- 
- 
+const Home = () => {
   return (
-  
-<div class="Homedisplay">
+    <div className="Homedisplay">
+      <span>Hello! This is our Application peeeps</span>
+      <span className="h11">
+        <img className="girl" src={require('./gl.png')} alt="Girl happy while working on laptop" />
+      </span>
+    </div>
+  );
+};
 
-
-<span>Hello ! This is our Application peeeps</span>
-<span class="h11">
-<img class="girl" src={require('./gl.png')}alt="Girl happy while working on laptop" />
-</span>
-
-</div>
-
-
-
-
-  )
-}
+export default Home;

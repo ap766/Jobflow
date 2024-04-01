@@ -7,7 +7,6 @@ const mongoose = require('mongoose')
 const JobBoard = require('./routes/JobAppSteps')
 const userRoutes = require('./routes/user.js')
 const BoardRoutes = require('./routes/Board.js')
-
 // express app
 const app = express()
 
@@ -36,3 +35,4 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((err) => {
     console.log(err)
   }) 
+module.exports = app

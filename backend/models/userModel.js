@@ -16,6 +16,9 @@ const userSchema = new Schema({
   }
 })
 
+
+
+
 // static signup method
 userSchema.statics.signup = async function(email, password) {
 
@@ -36,6 +39,18 @@ userSchema.statics.signup = async function(email, password) {
     throw Error('Email already in use')
   }
 
+  
+//original form is a security risk
+//so hash the password before saving it to the database
+//because if db breached the passwords are not exposed
+//although hackers may figure it through brute force but it will take a long time
+//and gives users time to change their passwords
+//hashed passwords compared when they log in
+
+//bcrypt is a hashing function 
+//salt - random string added to the password before hashing to make it unique (same passwords)
+//extra layer of protection
+
   const salt = await bcrypt.genSalt(10)
   const hash = await bcrypt.hash(password, salt)
   const user = await this.create({ email, password: hash })
@@ -43,6 +58,8 @@ userSchema.statics.signup = async function(email, password) {
 
   return user
 }
+
+
 // static login method
 userSchema.statics.login = async function(email, password) {
 
@@ -54,7 +71,7 @@ userSchema.statics.login = async function(email, password) {
   if (!user) {
     throw Error('Incorrect email')
   }
-
+  //The bcrypt.compare function is used to compare a plain-text password with a hashed password to determine if they match.
   const match = await bcrypt.compare(password, user.password)
   if (!match) {
     throw Error('Incorrect password')

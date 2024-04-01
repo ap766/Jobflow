@@ -1,35 +1,27 @@
-import config
 from typing import Final
 from telegram import Update
-from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
-TOKEN: Final=config.token
+from telegram.ext import CommandHandler, MessageHandler, filters, Application, ContextTypes
+
+TOKEN: Final = "5917622146:AAEZjjW4nPmn4nGhHOkp3UVsqXhQExGTHNU"
 BOT_USERNAME: Final = 'ap766_1_bot'
 
-# Lets us use the /start command
+
+# Command to handle /start
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("🎉 Hey there, JobFlow enthusiast! Tired of juggling countless job applications? Leave the chaos behind and let us be your trusty application sidekick!\n 💼🤖With JobFlow, bid farewell to sticky notes and scattered emails. We'll help you track every application step, from submission to interview, all in one organized place. 🚀\nNo more application amnesia or missed deadlines! Get ready for a streamlined job hunting experience that will make you say, 'I've got this!' 💪\nSo buckle up, job seeker extraordinaire, and let's conquer the job market, one application at a time! 🌟📝\nWelcome to JobFlow, where organized applications and job success await! 😄💼")
 
+
+# Command to handle /help
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text('Try typing anything and I will do my best to respond!')
 
+
+# Command to handle /custom
 async def custom_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text('This is a custom command, you can ad')
+    await update.message.reply_text('This is a custom command, you can add your logic here!')
 
-def handle_response(text: str) -> str:
-    # Create your own response logic
-    processed: str = text.lower()
 
-    if 'hello' in processed:
-        return 'Hey there!'
-
-    if 'how are you' in processed:
-        return 'I\'m good!'
-
-    if 'help me keep track of my jon' in processed:
-        return 'yesss!'
-
-    return 'I don\'t understand'
-
+# Function to handle incoming messages
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Get basic info of the incoming message
     message_type: str = update.message.chat.type
@@ -38,23 +30,25 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Print a log for debugging
     print(f'User ({update.message.chat.id}) in {message_type}: "{text}"')
 
-    # React to group messages only if users mention the bot directly
-    if message_type == 'group':
-        # Replace with your bot username
-        if BOT_USERNAME in text:
-            new_text: str = text.replace(BOT_USERNAME, '').strip()
-            response: str = handle_response(new_text)
-        else:
-            return  # We don't want the bot respond if it's not mentioned in the group
-    else:
-        response: str = handle_response(text)
+    # Create your own response logic
+    processed: str = text.lower()
 
-    # Reply normal if the message is in private
+    if 'hello' in processed:
+        response: str = 'Hey there!'
+    elif 'how are you' in processed:
+        response: str = 'I\'m good!'
+    elif 'help me keep track of my job' in processed:
+        response: str = 'Yes, sure!'
+
+    else:
+        response: str = 'I don\'t understand'
+
+    # Reply to the user
     print('Bot:', response)
     await update.message.reply_text(response)
 
 
-# Log errors
+# Function to handle errors
 async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print(f'Update {update} caused error {context.error}')
 
