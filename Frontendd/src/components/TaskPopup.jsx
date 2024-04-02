@@ -5,6 +5,7 @@ import TaskContext from "../context/TaskContext";
 import { useAuthContext } from "../hooks/useAuthContext"
 
 
+
 const EditBox = styled.div`
     padding: 20px; /* Reduced padding for better layout */
     border-radius: 12px;
@@ -35,12 +36,17 @@ const TextAreaField = styled.textarea`
 `;
 export default function TaskPopup({ ID,isOpen, task, column }) {
     const {user} = useAuthContext()
+    console.log("THE TITLE IF U CARE")
+    console.log(task.title)
     console.log("The id is")
     console.log(ID)
     console.log("TASK POP")
+    const [heardBack, setHeardBack] = useState(task.title === "HEARDBACK" ? task.additionalField : '');
+
     const { completed, setCompleted, incomplete, setIncomplete, backlog, setBacklog, inReview, setInReview } = React.useContext(TaskContext);
     const [editedTitle, setEditedTitle] = useState(task.title);
     const [editedDetails, setEditedDetails] = useState(task.details);
+    const [editedLink, setEditedLink] = useState(task.link);
     const handleSave = async () => {
         console.log("IDDDD")
         console.log(task.id)
@@ -112,14 +118,27 @@ export default function TaskPopup({ ID,isOpen, task, column }) {
                 <InputField
                     type="text"
                     value={editedTitle}
+                    placeholder="Job Title"
                     onChange={(e) => setEditedTitle(e.target.value)}
                     autoFocus
                 />
                 <TextAreaField
                     value={editedDetails}
                     onChange={(e) => setEditedDetails(e.target.value)}
-                    placeholder="Enter details..."
+                    placeholder="Details"
                 />
+                <InputField
+                    value={editedLink}
+                    onChange={(e) => setEditedLink(e.target.value)}
+                    placeholder="Job Link"
+                />
+                {task.title == "HEARDBACK" && (
+                    <InputField
+                        value={heardBack}
+                        onChange={(e) => setHeardBack(e.target.value)}
+                        placeholder="Additional Field"
+                    />
+                )}
                 <button onClick={handleSave}>Save</button>
             </EditBox>
         </Popup>

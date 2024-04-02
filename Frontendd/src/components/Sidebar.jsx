@@ -121,8 +121,8 @@ const Sidebar = () => {
             <li key={index}>
               <span
                 className={active === board.title ? 'active' : ''}
-                onDoubleClick={() => handleClick(board)}
-                onClick={() => handleSingleClick(board)}
+                onClick={() => handleClick(board)}
+                onDoubleClick={() => handleSingleClick(board)}
               >
                 {board.title}
               </span>

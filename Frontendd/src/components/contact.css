@@ -1,0 +1,43 @@
+/* contact.css */
+body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .homeDisplay {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh; /* Adjust height as needed */
+  }
+  
+  .contentContainer {
+    display: flex;
+    align-items: center;
+  }
+  
+  .girlContainer {
+    margin-right: 20px; /* Adjust spacing between image and text */
+  }
+  
+  .girl {
+    height: 250px;
+    width: 250px; /* Adjust size as needed */
+  }
+  
+  .textContainer {
+    font-size: 1.2rem;
+  }
+  
+  .rightImageContainer {
+    display: flex;
+    justify-content: flex-end; /* Align the content to the right */
+    align-items: flex-start; /* Align the content to the top */
+    margin-top: -50px; /* Adjust the margin to bring it up */
+  }
+  
+  .rightImage {
+    width: 150px; /* Adjust size as needed */
+    margin-left: 20px; /* Add margin to separate the image from text */
+  }
+  
