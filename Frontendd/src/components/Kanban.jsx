@@ -8,12 +8,17 @@ import { DragDropContext } from "react-beautiful-dnd";
 import TaskContext from "../context/TaskContext";
 import Column from "./Column";
 import { useAuthContext } from "../hooks/useAuthContext";
+import {useBrdsContext } from "../hooks/useBrdsContext";
+
+
 
 
 export default function Kanban() {
+      const { brds } = useBrdsContext(); 
       const { user } = useAuthContext();
 
     const { completed, setCompleted, incomplete, setIncomplete, backlog, setBacklog, inReview, setInReview } = React.useContext(TaskContext);
+
     useEffect(() => {
         const fetchData = async () => {
             console.log("Fetching data...");

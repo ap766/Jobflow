@@ -14,17 +14,23 @@ export const brdsReducer = (state, action) => {
         brds: [action.payload, ...state.brds] 
       }
 
+    case 'UPDATE_BRD':
+      return {
+        brds: state.brds.map(board => 
+          board._id === action.payload._id ? action.payload : board
+        )
+      };
 
-      case 'DELETE_BRD':
+    case 'DELETE_BRD':
       return { 
         brds: state.brds.filter(w => w._id !== action.payload._id) 
       }
-
 
     default:
       return state
   }
 }
+
 
 
 export const BrdContextProvider = ({ children }) => {
