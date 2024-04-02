@@ -6,20 +6,20 @@ import { BrdContextProvider } from './context/BrdsContext';
 import { AuthContextProvider } from './context/AuthContext'
 import { TaskProvider } from './context/TaskContext'
 import { JobContextProvider } from './context/JobsContext'
-import {  BoardContextProvider } from './context/BoardContext';
+import { BoardIdProvider } from './context/BoardIdContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <AuthContextProvider>
+      <BoardIdProvider>
       <JobContextProvider>
       <TaskProvider>
     <BrdContextProvider>
-    <BoardContextProvider>
     <App />
-    </BoardContextProvider>
     </BrdContextProvider>
     </TaskProvider>
     </JobContextProvider>
+    </BoardIdProvider>
   </AuthContextProvider>
 );
 

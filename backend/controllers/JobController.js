@@ -3,35 +3,49 @@ const mongoose = require('mongoose')
 
 
 const getJobs = async (req, res) => {
-  
-  const user_id = req.user._id
-  const jobs = await Jb.find({user_id}).sort({createdAt: -1})
-  res.status(200).json(jobs)
+ 
+
+
+try {
+  const { board_id } = req.params.id;
+  const user_id = req.user._id;
+  console.log("The BOARD ID IS")
+  console.log(board_id)
+  console.log(req.params.id)
+  const jobs = await Jb.find({board_id:req.params.id,user_id:user_id}).sort({createdAt: -1})
+  res.status(200).json(jobs);
+
+  console.log(jobs)
+
+  // Your code to fetch jobs
+} catch (error) {
+  console.error('Error fetching jobs:', error);
+  res.status(500).json({ message: 'Server error' });
+}
 }
 
 
 
-const getJob= async (req, res) => {
-  const { id } = req.params
+// const getJob= async (req, res) => {
+//   const { id } = req.params
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({error: 'No such job'})
-  }
+//   if (!mongoose.Types.ObjectId.isValid(id)) {
+//     return res.status(404).json({error: 'No such job'})
+//   }
 
-  const job = await Jb.findById(id)
+//   const job = await Jb.findById(id)
 
-  if (!job) {
-    return res.status(404).json({error: 'No such job'})
-  }
+//   if (!job) {
+//     return res.status(404).json({error: 'No such job'})
+//   }
 
-  res.status(200).json(job)
-}
+//   res.status(200).json(job)
+// }
 
 // create a new workout
 const createJob= async (req, res) => {
   console.log(req)
-  const { title, section,id } = req.body;
-
+  const { title, section,id,board_id} = req.body;
   console.log(title)
   console.log(section)
   console.log(req.user._id)
@@ -39,9 +53,9 @@ const createJob= async (req, res) => {
   try {
     const user_id = req.user._id//Added this at this
     //show req.user to see what it is and what it has
-    console.log(req.user)
+    console.log(req.body)
     // const jb = await Jb.create({ title,description,joblink,roundtiming,status,boardid,user_id,phone_number,id})//here too at last the user_id .. in the table too
-    const jb = await Jb.create({ title,section,user_id,id})//here too at last the user_id .. in the table too
+    const jb = await Jb.create({ title,section,user_id,id,board_id})//here too at last the user_id .. in the table too
     console.log("hello")
     res.status(200).json(jb)
   } catch (error) {
@@ -93,7 +107,6 @@ const updateJob = async (req, res) => {
 
 module.exports = { 
   getJobs,
-  getJob,
   createJob,
   deleteJob,
   updateJob

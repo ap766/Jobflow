@@ -104,7 +104,7 @@ export default function Task({ task, index, onSave, column }) {
               <div style={{ display: "flex", justifyContent: "start", padding: 2 }}>
                 <span>
                   <small>
-                    #{task.id}
+                  
                     {"  "}
                   </small>
                 </span>

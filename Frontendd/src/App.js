@@ -5,7 +5,6 @@ import { useAuthContext } from './hooks/useAuthContext'
 // Components
 import Navbar from './components/Navbar'
 import Home from "./components/Home";
-import Dashboard from './components/DashBoard'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Kanban from './components/Kanban';
@@ -40,10 +39,7 @@ function App() {
               path="/kanban"
               element={user ? <Kanban /> : <Navigate to="/login" />}
             />
-            <Route 
-              path="/dashboard"
-              element={user ? <Dashboard /> : <Navigate to="/login" />}
-            />
+
           </Routes>
         </div>
       </BrowserRouter>

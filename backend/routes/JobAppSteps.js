@@ -1,8 +1,7 @@
 const express = require('express')
-const {
+const { 
   
   getJobs,
-  getJob,
   createJob,
   deleteJob,
   updateJob
@@ -15,10 +14,10 @@ const router = express.Router()
 // require auth for all routes
 router.use(requireAuth)
 
-router.get('/', getJobs)
+//router.get('/', getJobs)
 
 // GET a single workout
-router.get('/:id', getJob)
+router.get('/:id', getJobs)
 
 // POST a new workout
 router.post('/', createJob)

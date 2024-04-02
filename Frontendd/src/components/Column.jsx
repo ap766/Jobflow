@@ -6,7 +6,7 @@ import "./scroll.css";
 import TaskContext from "../context/TaskContext";
 import { Droppable } from "react-beautiful-dnd";
 import { useAuthContext } from "../hooks/useAuthContext"
-
+import BoardIdContext from '../context/BoardIdContext';
 
 
 const AddButton = styled.button`
@@ -50,6 +50,7 @@ const TaskList = styled.div`
 export default function Column({ title, tasks, id }) {
     //the header id refers to for the column
     const {user} = useAuthContext()
+    const { BoardId, setBoardId } = React.useContext(BoardIdContext);
     const { completed,setCompleted,incomplete,setIncomplete,backlog,setBacklog,inReview,setInReview } = React.useContext(TaskContext);
     console.log("these are the tasks")
     console.log(tasks)
@@ -83,7 +84,12 @@ export default function Column({ title, tasks, id }) {
                 break;
         }
     
- console.log("Hello we are here in the add button click");
+ console.log("Hello we are here in button click");
+ console.log("Pls luck be on my side")
+ const combinData = { ...newTask, board_id: BoardId };
+ console.log(combinData)
+
+
         try {
             const response = await fetch("/api/JobAppSteps/", {
                 method: "POST",
@@ -92,12 +98,16 @@ export default function Column({ title, tasks, id }) {
                     "Authorization": `Bearer ${user.token}` // Include user token in the header
                 },
                 
-                body: JSON.stringify(newTask) // Convert newTask to JSON string
+                body: JSON.stringify(combinData) // Convert newTask to JSON string
             });
+            if (response.ok) {
+                console.log("Task added successfully so gud");
+            }
     
             if (!response.ok) {
                 throw new Error("Failed to add new task");
             }
+          
         } catch (error) {
             console.log("ERROR LAND")
             console.error("Error adding new task:", error);
@@ -112,7 +122,7 @@ export default function Column({ title, tasks, id }) {
                 style={{
                     backgroundColor: "lightblue",
                     position: "sticky",
-                    top: "0",
+                    
                 }}
             >
                 {title}

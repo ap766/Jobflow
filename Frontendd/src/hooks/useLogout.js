@@ -1,9 +1,7 @@
 import { useAuthContext } from './useAuthContext'
-import { useBoardsContext } from './useBoardsContext'
 
 export const useLogout = () => {
   const { dispatch } = useAuthContext()
-   const { dispatch: dispatchBoards } = useBoardsContext()
 
   const logout = () => {
     // remove user from storage
@@ -13,7 +11,7 @@ export const useLogout = () => {
     dispatch({ type: 'LOGOUT' })
 
 
-    dispatchBoards({ type: 'SET_BOARDS', payload: null })
+    //dispatchBoards({ type: 'SET_BRDS', payload: null })
   }
 
   return { logout }

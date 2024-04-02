@@ -1,31 +1,45 @@
 import React, { useState, useEffect } from 'react';
+import LoadingPopup from './LoadingPopup'; // Import your loading popup component
 import './Sidebar.css'; // Import your CSS file here
 import BoardPopup from './BoardPopup';
+import TaskContext from '../context/TaskContext';
 import { useBrdsContext } from '../hooks/useBrdsContext';
 import { useAuthContext } from "../hooks/useAuthContext";
+import BoardIdContext from '../context/BoardIdContext';
 
 const Sidebar = () => {
   const { user } = useAuthContext();
   const { brds, dispatch } = useBrdsContext();
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
+  const { BoardId, setBoardId } = React.useContext(BoardIdContext);
+  const { completed, setCompleted, incomplete, setIncomplete, backlog, setBacklog, inReview, setInReview } = React.useContext(TaskContext);
   const [active, setActive] = useState('Learn Python');
 
   useEffect(() => {
+
+    console.log("Heyyyy kkk")
+
     const fetchBoards = async () => {
       try {
         const response = await fetch("/api/Board/", {
           headers: { 'Authorization': `Bearer ${user.token}` },
+
         });
         const json = await response.json();
+
         if (response.ok) {
           dispatch({ type: 'SET_BRDS', payload: json });
+          const latestBoardId = json.length > 0 ? json[json.length - 1]._id : null;
+          console.log("Latest Board ID:", latestBoardId);
+          setBoardId(latestBoardId);
         }
       } catch (error) {
         console.error('Error fetching boards:', error);
       }
     }
-
+    
     if (user) {
       fetchBoards();
     }
@@ -34,6 +48,7 @@ const Sidebar = () => {
   const handleClick = (task) => {
     setActive(task);
     setIsOpen(true);
+
   };
 
   const handleAddTask = async () => {
@@ -62,6 +77,19 @@ const Sidebar = () => {
       console.error('Error adding new task:', error);
     }
   };
+  const handleSingleClick = (task) => {
+    // Show loading screen
+    setLoading(true);
+
+    // Simulate an asynchronous operation (e.g., API call)
+    setTimeout(() => {
+      // Update the board ID in the state
+      setBoardId(task._id);
+      setLoading(false); // Hide loading screen
+    }, 2000); // Simulated delay for demonstration
+  };
+
+
 
   const handleDeleteTask = async (boardId) => {
     try {
@@ -93,7 +121,8 @@ const Sidebar = () => {
             <li key={index}>
               <span
                 className={active === board.title ? 'active' : ''}
-                onClick={() => handleClick(board)}
+                onDoubleClick={() => handleClick(board)}
+                onClick={() => handleSingleClick(board)}
               >
                 {board.title}
               </span>
@@ -112,6 +141,7 @@ const Sidebar = () => {
             onClose={() => setIsOpen(false)}
           />
         )}
+          {loading && <LoadingPopup />}
       </div>
     </div>
   );

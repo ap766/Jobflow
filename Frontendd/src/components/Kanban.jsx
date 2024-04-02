@@ -9,31 +9,38 @@ import TaskContext from "../context/TaskContext";
 import Column from "./Column";
 import { useAuthContext } from "../hooks/useAuthContext";
 import {useBrdsContext } from "../hooks/useBrdsContext";
-
-
-
+import BoardIdContext from "../context/BoardIdContext";
 
 export default function Kanban() {
       const { brds } = useBrdsContext(); 
+      const { BoardId, setBoardId } = React.useContext(BoardIdContext);
       const { user } = useAuthContext();
+    
+
 
     const { completed, setCompleted, incomplete, setIncomplete, backlog, setBacklog, inReview, setInReview } = React.useContext(TaskContext);
-
+    
     useEffect(() => {
         const fetchData = async () => {
-            console.log("Fetching data...");
+            console.log("We ahabdafffnnnn")
+            console.log("Fetch gdatHJDaaa...");
+            console.log("BoardId", BoardId);
+          
             try {
-                const response = await fetch("api/JobAppSteps/", {
+                const response = await fetch(`api/JobAppSteps/${BoardId}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${user.token}`,
                     },
                 });
+                console.log("WE ARE GETTING BLAHHHH")
                 if (!response.ok) {
                     throw new Error("Failed to fetch data");
                 }
                 const json = await response.json();
+                console.log("WE ARE GETTING BLAHHHH")
+                console.log(json);
                 // Filter the JSON data based on a particular value in a column
                     let interested = json.filter((task) => task.section == "INTERESTED");
             let applied = json.filter((task) => task.section == "APPLIED");
@@ -51,9 +58,9 @@ export default function Kanban() {
         };
     
         fetchData(); // Call the async function
-    }, [user.token, setIncomplete, setCompleted, setBacklog, setInReview]);
+    }, [user.token, setIncomplete, setCompleted, setBacklog, setInReview,BoardId]);
     
-
+//user.token, setIncomplete, setCompleted, setBacklog, setInReview,setBoardId
     useEffect(() => {
         console.log('Updated Completed:', completed);
     }, [completed]); // Run this effect whenever 'completed' state changes
@@ -143,6 +150,8 @@ export default function Kanban() {
                 </div>
                 </div>
             </DragDropContext>
+             {/* Render the loading popup if loading state is true */}
+          
         </div>
     );
 }
