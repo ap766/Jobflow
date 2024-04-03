@@ -12,7 +12,6 @@ body {
   }
   
   .contentContainer {
-    display: flex;
     align-items: center;
   }
   
@@ -21,23 +20,25 @@ body {
   }
   
   .girl {
-    height: 250px;
-    width: 250px; /* Adjust size as needed */
+    height: 400px;
+    width: 400px; /* Adjust size as needed */
   }
   
   .textContainer {
     font-size: 1.2rem;
+    border: 1px solid black;
   }
-  
+
   .rightImageContainer {
-    display: flex;
-    justify-content: flex-end; /* Align the content to the right */
-    align-items: flex-start; /* Align the content to the top */
-    margin-top: -50px; /* Adjust the margin to bring it up */
+    margin-top: 450px;
+    align-items: center;
   }
-  
   .rightImage {
-    width: 150px; /* Adjust size as needed */
+    width: 700px; /* Adjust size as needed */
     margin-left: 20px; /* Add margin to separate the image from text */
+  }
+  .righttext{
+    font-size: 1.2rem;
+    border: 1px solid black;
   }
   

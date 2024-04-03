@@ -155,12 +155,17 @@ export default function Kanban() {
         <div style={{ display: "flex" }}>
             <DragDropContext onDragEnd={handleDragEnd}>
                 <div>
-                    <h2 style={{ textAlign: "center" }}>PROGRESS BOARD</h2>
-
+                    <h2 style={{ textAlign: "center" }}>TRACK THE PROGRESS</h2>
+<h5 style={{marginLeft:"800px" }}>Stay updated on your scheduled times by clicking this button for notifications</h5>
                     <div style={{ display: "flex", justifyContent: "flex-end" }}>
-    <button onClick={Notification} style={{ borderRadius: "50%" }}>
+            
+                    <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+    <img src={require('./arrow.png')} alt="Arrow" style={{ marginRight: "5px" ,height:"80px"}} />
+    <button onClick={Notification} style={{ borderRadius: "50%", padding: "10px", backgroundColor: "#007bff", color: "#fff", border: "none", cursor: "pointer" }}>
         <h3>CLICK</h3>
     </button>
+</div>
+
 </div>
 
                     <div

@@ -15,7 +15,7 @@ const Home = () => {
         </span>
       </div>
       <div className="rightImageContainer">
-        <p>hi</p>
+        <p className="righttext">Keep Track of your  Job/Internship Applications through a Kanban Board:</p>
         <img className="rightImage" src={require('./sample.png')} alt="Girl happy while working on laptop" />
       </div>
     </div>

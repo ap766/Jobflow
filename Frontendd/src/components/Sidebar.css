@@ -49,4 +49,20 @@
   .plus-icon {
     margin-right: 5px;
   }
+  .delete-button {
+    background-color: lightblue; /* Red background color */
+    color: #fff; /* White text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Add border-radius for rounded corners */
+    padding: 8px 16px; /* Add padding */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    margin-left: 5px; /* Add margin to separate from the board title */
+  }
   
+  .delete-button:hover {
+    background-color:rgb(25, 160, 205); /* Darker shade on hover */
+  }
+  .board-title.active {
+  background-color: #e8f0fe; /* Change to your preferred highlight color */
+  font-weight: bold; /* Change to your preferred text style */
+}

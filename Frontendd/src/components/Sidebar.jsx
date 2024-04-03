@@ -7,6 +7,8 @@ import { useBrdsContext } from '../hooks/useBrdsContext';
 import { useAuthContext } from "../hooks/useAuthContext";
 import BoardIdContext from '../context/BoardIdContext';
 
+
+
 const Sidebar = () => {
   const { user } = useAuthContext();
   const { brds, dispatch } = useBrdsContext();
@@ -54,7 +56,7 @@ const Sidebar = () => {
   const handleAddTask = async () => {
     try {
       const taskData = {
-        title: 'New Internship Title',
+        title: 'New Title',
         description: 'New Task Description',
       };
 
@@ -113,25 +115,30 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <h3>Tasks</h3>
+        <h3>Boards</h3>
       </div>
       <div className="sidebar-content">
         <ul>
-          {brds.map((board, index) => (
-            <li key={index}>
-              <span
-                className={active === board.title ? 'active' : ''}
-                onClick={() => handleClick(board)}
-                onDoubleClick={() => handleSingleClick(board)}
-              >
-                {board.title}
-              </span>
-              <button onClick={() => handleDeleteTask(board._id)}>Delete</button>
-            </li>
-          ))}
+        {brds.map((board, index) => (
+  <li key={index}>
+    <span
+      className={active.title == board.title ? 'active board-title' : 'board-title'}
+      onClick={() => handleClick(board)}
+      onDoubleClick={() => handleSingleClick(board)}
+
+    >
+      {board.title}
+    </span>
+    <button onClick={() => handleDeleteTask(board._id)} className="delete-button">
+      Delete
+    </button>
+  </li>
+))}
+
+             
         </ul>
         <button className="add-button" onClick={handleAddTask}>
-          <span className="plus-icon">+</span> Add Task
+          <span className="plus-icon"></span> ADD BOARD
         </button>
 
         {isOpen && (

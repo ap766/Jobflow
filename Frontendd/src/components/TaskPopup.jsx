@@ -242,7 +242,7 @@ export default function TaskPopup({ ID, isOpen, task, column }) {
                 />
                 Add Important Dates:
                 <div>
-                {dates.map((date, index) => (
+                {dates && dates.map((date, index) => (
     <DateField key={index}>
         <DatePickerWrapper>
             <DatePicker
