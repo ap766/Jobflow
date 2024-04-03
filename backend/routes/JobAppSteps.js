@@ -4,7 +4,8 @@ const {
   getJobs,
   createJob,
   deleteJob,
-  updateJob
+  updateJob,
+  updateJobnoti
 } = require('../controllers/JobController')
 
  
@@ -27,5 +28,8 @@ router.delete('/:id', deleteJob)
 
 // UPDATE a workout
 router.patch('/:id', updateJob)
+
+//UPDATE all of a user
+router.patch('/', updateJobnoti)
 
 module.exports = router

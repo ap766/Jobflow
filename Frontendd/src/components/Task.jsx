@@ -114,7 +114,7 @@ export default function Task({ task, index, onSave, column }) {
               </div>
               <Icons>
                 <div>
-                <DeleteOutlined onClick={handleDelete} style={{ color: "red", fontSize: "20px", cursor: "pointer" }} />
+                <DeleteOutlined onClick={handleDelete} style={{ color: "black", fontSize: "20px", cursor: "pointer" }} />
                 </div>
               </Icons>
               {provided.placeholder}

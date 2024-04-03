@@ -1,12 +1,13 @@
-
 require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
+const scheduleNotifications = require('./NotificationController.js'); // Import the function to schedule notifications
 
 // import routes
 const JobBoard = require('./routes/JobAppSteps')
 const userRoutes = require('./routes/user.js')
 const BoardRoutes = require('./routes/Board.js')
+
 // express app
 const app = express()
 
@@ -27,6 +28,10 @@ app.use('/api/Board', BoardRoutes)
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('connected to database')
+    
+    // Call the function to schedule notifications
+    scheduleNotifications();
+    
     // listen to port
     app.listen(process.env.PORT, () => {
       console.log('listening for requests on port', process.env.PORT)
@@ -35,4 +40,5 @@ mongoose.connect(process.env.MONGO_URI)
   .catch((err) => {
     console.log(err)
   }) 
+
 module.exports = app

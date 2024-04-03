@@ -47,7 +47,12 @@ const jobSchema = new Schema({
   id:{
     type: String,
     required: false
-  }
+  },
+  roundinfo:{
+    type:Array,
+    required:false
+  },  receiveNotifications: { type: Boolean, default: false }
+
 
 }, { timestamps: true })
 

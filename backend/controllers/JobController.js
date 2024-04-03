@@ -83,6 +83,19 @@ const deleteJob = async (req, res) => {
   }
 };
 
+const updateJobnoti = async (req, res) => {
+  const user_id = req.user._id;
+  console.log(user_id)
+  console.log(req.body)
+  try {
+    const jb = await Jb.updateMany({ user_id: user_id }, { ...req.body });
+    res.status(200).json(jb);
+  } catch (error) {
+    console.error('Error updating jobs:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 const updateJob = async (req, res) => {
 
   //THIS I HAVE SOME DOUBT 
@@ -109,5 +122,6 @@ module.exports = {
   getJobs,
   createJob,
   deleteJob,
-  updateJob
+  updateJob,
+  updateJobnoti
 }
