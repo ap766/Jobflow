@@ -4,16 +4,19 @@
 const Bd = require('../models/BoardsModel');
 const mongoose = require('mongoose')
 
-const getBoards = (req, res) => {
-  Bd.find()
-    .then((result) => {
-      res.status(200).json(result)
-    })
-    .catch((err) => {
-      res.status(400).json({ error: err.message })
-    })
-}
+const getBoards = async (req, res) => {
+  const user_id = req.user._id; // Assuming req.user._id is the user's ID
 
+  try {
+    // Assuming Jb is your Mongoose model for boards
+    const boards = await Bd.find({ user_id: user_id }).sort({ createdAt: -1 });
+    
+    res.status(200).json(boards);
+  } catch (error) {
+    console.error('Error fetching boards:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 const getBoard = (req, res) => {
   const { id } = req.params
 

@@ -112,6 +112,7 @@ export default function TaskPopup({ ID, isOpen, task, column }) {
     const handleSave = async () => {
         // Determine the column of the edited task
         // Update the state based on the column
+        
         let updatedTask;
         switch (column) {
 
@@ -155,6 +156,8 @@ export default function TaskPopup({ ID, isOpen, task, column }) {
         }
     
         try {
+            const istDates = dates.map(date => new Date(date).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
+            console.log('IST Dates:', istDates);
             console.log(dates);
             console.log(dateNotes);
             console.log("Updating task...");
@@ -165,7 +168,7 @@ export default function TaskPopup({ ID, isOpen, task, column }) {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${user.token}`
                 },
-                body: JSON.stringify({ title: editedTitle, description: editedDetails, section: column, id: ID, roundtiming: dates, roundinfo: dateNotes, joblink: editedLink })
+                body: JSON.stringify({ title: editedTitle, description: editedDetails, section: column, id: ID, roundtiming: istDates, roundinfo: dateNotes, joblink: editedLink })
             });
     
             if (!response.ok) {

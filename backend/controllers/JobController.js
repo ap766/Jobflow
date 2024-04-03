@@ -1,10 +1,7 @@
 const Jb = require('../models/JobModel')
 const mongoose = require('mongoose')
 
-
 const getJobs = async (req, res) => {
- 
-
 
 try {
   const { board_id } = req.params.id;

@@ -3,33 +3,51 @@ const Notification = require('../backend/models/JobModel');
 const notifier = require('node-notifier');
 
 function scheduleNotifications() {
-    console.log("Hello")
+    console.log("Hello");
     // Schedule a task to run every minute
     cron.schedule('* * * * *', async () => {
         try {
-            // Query the database for events scheduled within
-            // the next minute
-            console.log(Notification)
+            const dateString = new Date()
 
-            const events = await Notification.find({ roundtiming: { $gte: new Date(), $lt: new Date(Date.now() + 60000) } });
-            console.log(events)
+            // Create a new Date object from the date string
+            const date = new Date(dateString);
+
+            // Use the toISOString() method to convert the date object to ISO 8601 format
+            const isoString = date.toISOString();
+
+            console.log(isoString); // Output: "2024-04-03T17:40:00.000Z"
+
+           
+            console.log("Executing scheduleNotifications task...");
+            // Query the database for events scheduled within the next minute
+            const events = await Notification.find({ roundtiming: { $gte: isoString } });
+            console.log("Events scheduled within the next minute:", events);
+            
             // Get users who have opted in to receive notifications
             const users = await Notification.find({ receiveNotifications: true });
-            console.log(users)
-            
+
             // Iterate through events
             events.forEach(event => {
                 // Check if event has any round timings
                 if (event.roundtiming.length > 0) {
+                    console.log("hey boi")
+                    console.log(event.roundinfo)
                     // Iterate through round timings
-                    event.roundtiming.forEach((roundTime, index) => {
+                    event.roundtiming.forEach(roundTime => {
+                        console.log("hey")
                         const currentTime = Date.now();
-                        const eventTime = new Date(roundTime).getTime(); // Assuming roundtiming contains event timings
+                        console.log(currentTime);
+                        const eventTime = new Date(roundTime);
+                        console.log(eventTime);
 
                         // Check if event's round timing falls within the next minute
                         if (eventTime >= currentTime && eventTime < currentTime + 60000) {
+                            console.log("WOW AMAZING")
                             // Trigger notification for the event round
-                            const roundNote = event.roundnotes[index]; // Assuming roundnotes contains notes related to each round timing
+                            const index = event.roundtiming.indexOf(roundTime);
+                            console.log(index)
+                            const roundNote = event.roundinfo[index];
+                            console.log(roundNote)
                             sendNotification(event, roundTime, roundNote, users);
                         }
                     });
@@ -41,6 +59,7 @@ function scheduleNotifications() {
     });
 }
 
+
 function sendNotification(event, roundTime, roundNote, users) {
     console.log(`Sending notification for event "${event.title}" at time "${roundTime}" with note "${roundNote}"`);
 
@@ -49,7 +68,11 @@ function sendNotification(event, roundTime, roundNote, users) {
         // Implement logic to send notification to each user
         // Check if user has opted in to receive notifications
         if (user.receiveNotifications) {
-            // Example: notifier.notify({ title: event.title, message: roundNote });
+            // Send notification using node-notifier
+            notifier.notify({
+                title: event.title,
+                message: roundNote
+            });
         }
     });
 }
