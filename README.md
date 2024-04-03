@@ -6,6 +6,7 @@ With this application, users can easily organize and track their job application
 ## Features
 + User registration and login
 + Kanban Board to track overall application progress
+ ![image](https://github.com/ap766/Jobflow/assets/79255079/9b5ae87a-a5bb-497d-bb1b-aa57949d1da6)
 + Add new job applications with details ,link
 + Set reminders for important dates and times
 + Update application status by dragging it to the Applied,Rounds/Interviews,HeardBack columns
