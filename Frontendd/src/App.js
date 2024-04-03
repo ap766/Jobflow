@@ -9,6 +9,7 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import Kanban from './components/Kanban';
 import Combined from "./components/Combined";
+import Footer from "./components/Footer"; 
 
 function App() {
   const { user } = useAuthContext();
@@ -42,6 +43,7 @@ function App() {
 
           </Routes>
         </div>
+        <Footer />
       </BrowserRouter>
     </div>
   );

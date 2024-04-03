@@ -1,0 +1,78 @@
+/* styles.css */
+
+/* First section */
+.first-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px;
+  }
+  
+  .first-section .image {
+    flex: 1;
+  }
+  
+  .first-section .text {
+    flex: 1;
+  }
+  
+  /* Second section */
+  .second-section {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px;
+  }
+  
+  .second-section .image {
+    flex: 1;
+  }
+  
+  .second-section .text {
+    flex: 1;
+  }
+  
+
+  
+  /* Button section */
+  .button-section {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .button-section button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button-section button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Screenshots section */
+  .screenshots-section {
+    /* Add your styles for the screenshots section here */
+  }
+/* Third section */
+.third-section {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .third-section .container {
+    display: flex;
+    justify-content: space-between; /* Spread columns evenly */
+  }
+  
+  .third-section .col-md-4 {
+    flex: 1;
+  }
+  
