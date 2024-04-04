@@ -7,12 +7,12 @@
   --error: #e7195a;
 }
 body {
-  background: #f1f1f1;
+  background: hsl(0, 0%, 100%);
   margin: 0;
   font-family: "Poppins";
 }
 header {
-  background: #fff;
+  background: rgb(215, 237, 255);
 }
 header .container {
   max-width: 1400px;
@@ -151,4 +151,14 @@ form.signup, form.login {
   color: #000;
   margin-bottom: 50px;
   margin-top: 50px;
+}
+
+footer {
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  background: #111;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
 }
