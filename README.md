@@ -4,6 +4,8 @@ With this application, users can easily organize and track their job application
 + Frontend - Reactjs,HTML,CSS
 + Backend - Nodejs,Expressjs,Mongodb
 ## Features
+### 1) Home Page
+![image](https://github.com/ap766/Jobflow/assets/79255079/c1ff5145-67d4-4198-9666-ae0911f71554)
 ### 2) User registration and login
 ![image](https://github.com/ap766/Jobflow/assets/79255079/2adaef3e-1bf4-497a-a07d-42f3fe41faab)
 ### 3) Kanban Board to track overall application progress
