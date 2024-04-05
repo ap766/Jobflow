@@ -5,23 +5,33 @@ With this application, users can easily organize and track their job application
 + Backend - Nodejs,Expressjs,Mongodb
 ## Features
 ### 1) Home Page
+It contains the information about the application
 ![image](https://github.com/ap766/Jobflow/assets/79255079/c1ff5145-67d4-4198-9666-ae0911f71554)
 ### 2) User registration and login
+Registeration and Login using password which is hashed using bcrypt library and stored in the database
 ![image](https://github.com/ap766/Jobflow/assets/79255079/2adaef3e-1bf4-497a-a07d-42f3fe41faab)
 ### 3) Kanban Board to track overall application progress
+Created using react-beautiful-dnd you can move your application to the respective column based on its status
 ![image](https://github.com/ap766/Jobflow/assets/79255079/9b5ae87a-a5bb-497d-bb1b-aa57949d1da6)
 ### 4) Add new Board for your Job/Internship Search! - Double Click to open other boards
+Create a new board when you begin your search .Double click and view your previous boards.
 ![image](https://github.com/ap766/Jobflow/assets/79255079/5e875cf6-5e9e-48c0-8352-bfc4a13b34cd)
 ### 5) Add new job/internship applications with details ,link. - Use + button to add and double click to edit the details
+Click the + button to add a new job to the respective column and furthur edit it by double clicking on it 
 ![image](https://github.com/ap766/Jobflow/assets/79255079/79119779-0f10-4453-9ca2-be5e375671d5)
 ### 6) Set reminders for important dates and times
+Use the calender to remember important dates and times
 ![image](https://github.com/ap766/Jobflow/assets/79255079/3b3e4699-c15b-4f86-9c52-9f5b5996370b)
 ### 7) Update application status by dragging it to the Applied,Rounds/Interviews,HeardBack columns
+Move it to be the respective column
 ![image](https://github.com/ap766/Jobflow/assets/79255079/be918d12-4c27-4203-ac40-8567eb35ebf0)
 ### 8) Set Desktop Notifications so you dont miss any round! Also add notes - mentioning what it is along with the actual scheduled time
+Click on the button at the top right if you wish to recieve notificatons for that particular board
 ![image](https://github.com/ap766/Jobflow/assets/79255079/287f3b53-de88-45ca-a022-a6b5f3a9b359)
 ### 9) Edit or delete boards,applications
+
 ## Deleted one job
+Click on delete option
 ![image](https://github.com/ap766/Jobflow/assets/79255079/25af3bbc-2062-42e5-b2d6-44d859cc8db7)
 ## Editing Board Title - Single Click to Edit Board!
 ![image](https://github.com/ap766/Jobflow/assets/79255079/e84fb895-4521-4f93-b922-a74c681a7c1b)
