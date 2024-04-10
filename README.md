@@ -49,7 +49,7 @@ Click on delete option
 + Bot on the website to help with general advise related to jobs/internships
 
 ## How to run 
-# To run Dimensioning Backend
+# To run Backend
 Navigate to the project directory:
 
 `cd backend`
