@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
-import TaskContext from "../context/TaskContext";
+import JobContext from "../context/JobContext";
 import Column from "./Column";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useBrdsContext } from "../hooks/useBrdsContext";
@@ -11,7 +11,7 @@ export default function Kanban() {
     const { BoardId, setBoardId } = React.useContext(BoardIdContext);
     const { user } = useAuthContext();
 
-    const { completed, setCompleted, incomplete, setIncomplete,  inReview, setInReview,backlog, setBacklog } = React.useContext(TaskContext);
+    const { interested, setInterested, applied, setApplied,  interview, setInterview,final, setFinal } = React.useContext(JobContext);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,19 +32,19 @@ export default function Kanban() {
                 let interested = json.filter((task) => task.section === "INTERESTED");
                 let applied = json.filter((task) => task.section === "APPLIED");
                 let rounds = json.filter((task) => task.section === "ROUNDS/INTERVIEWS");
-                let heardBack = json.filter((task) => task.section === "HEARDBACK");
+                let final = json.filter((task) => task.section === "FINAL");
 
-                setIncomplete(interested);
-                setCompleted(applied);
-                setInReview(rounds);
-                setBacklog(heardBack);
+                setApplied(interested);
+                setInterested(applied);
+                setInterview(rounds);
+                setFinal(final);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         };
 
         fetchData();
-    }, [user.token, setIncomplete, setCompleted, setBacklog, setInReview, BoardId]);
+    }, [user.token, setApplied, setInterested, setFinal, setInterview, BoardId]);
     const Notification = async () => { try {
         const response = await fetch(`api/JobAppSteps/`, {
             method: "PATCH",
@@ -71,7 +71,7 @@ export default function Kanban() {
         const { destination, source, draggableId } = result;
         if (!destination || source.droppableId === destination.droppableId) return;
 
-        const task = findItemById(draggableId, [...incomplete, ...completed, ...inReview, ...backlog]);
+        const task = findItemById(draggableId, [...applied, ...interested, ...interview, ...final]);
 
         const updatedTask = { ...task }; // Create a copy of the task object
 
@@ -86,7 +86,7 @@ export default function Kanban() {
                 updatedTask.section = "ROUNDS/INTERVIEWS";
                 break;
             case "4":
-                updatedTask.section = "HEARDBACK";
+                updatedTask.section = "FINAL";
                 break;
         }
 
@@ -106,16 +106,16 @@ export default function Kanban() {
             // Update the state after the PATCH request is successful
             switch (updatedTask.section) {
                 case "INTERESTED":
-                    setIncomplete(prevIncomplete => [...prevIncomplete, updatedTask]);
+                    setApplied(prevApplied => [...prevApplied, updatedTask]);
                     break;
                 case "APPLIED":
-                    setCompleted(prevCompleted => [...prevCompleted, updatedTask]);
+                    setInterested(prevInterested=> [...prevInterested, updatedTask]);
                     break;
                 case "ROUNDS/INTERVIEWS":
-                    setInReview(prevInReview => [...prevInReview, updatedTask]);
+                    setInterview(prevInterview => [...prevInterview, updatedTask]);
                     break;
-                case "HEARDBACK":
-                    setBacklog(prevBacklog => [...prevBacklog, updatedTask]);
+                case "FINAL":
+                    setFinal(prevFinal => [...prevFinal, updatedTask]);
                     break;
             }
 
@@ -129,16 +129,16 @@ export default function Kanban() {
     function deletePreviousState(sourceDroppableId, taskId) {
         switch (sourceDroppableId) {
             case "1":
-                setIncomplete(prevIncomplete => removeItemById(taskId, prevIncomplete));
+                setApplied(prevApplied => removeItemById(taskId, prevApplied));
                 break;
             case "2":
-                setCompleted(prevCompleted => removeItemById(taskId, prevCompleted));
+                setInterested(prevInterested => removeItemById(taskId, prevInterested));
                 break;
             case "3":
-                setInReview(prevInReview => removeItemById(taskId, prevInReview));
+                setInterview(prevInterview => removeItemById(taskId, prevInterview));
                 break;
             case "4":
-                setBacklog(prevBacklog => removeItemById(taskId, prevBacklog));
+                setFinal(prevFinal => removeItemById(taskId, prevFinal));
                 break;
         }
     }
@@ -178,10 +178,10 @@ export default function Kanban() {
                             margin: "0 auto"
                         }}
                     >
-                        <Column title={"INTERESTED"} tasks={incomplete} id={"1"} />
-                        <Column title={"APPLIED"} tasks={completed} id={"2"} />
-                        <Column title={"ROUNDS/INTERVIEWS"} tasks={inReview} id={"3"} />
-                        <Column title={"HEARDBACK"} tasks={backlog} id={"4"} />
+                        <Column title={"INTERESTED"} tasks={applied} id={"1"} />
+                        <Column title={"APPLIED"} tasks={interested} id={"2"} />
+                        <Column title={"ROUNDS/INTERVIEWS"} tasks={interview} id={"3"} />
+                        <Column title={"FINAL"} tasks={final} id={"4"} />
                     </div>
                 </div>
             </DragDropContext>

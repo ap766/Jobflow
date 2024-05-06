@@ -1,17 +1,18 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthContext } from './hooks/useAuthContext'
-
-// Components
 import Navbar from './components/Navbar'
 import Home from "./components/Home";
 import Login from './components/Login'
 import Signup from './components/Signup'
-import Kanban from './components/Kanban';
 import Combined from "./components/Combined";
 import Footer from "./components/Footer"; 
 
 function App() {
+
+  
+
+//Retrieves the user object from the authentication context which is a custom react hook 
   const { user } = useAuthContext();
 
   return (
@@ -36,11 +37,6 @@ function App() {
               path="/signup" 
               element={!user ? <Signup /> : <Navigate to="/" />}
             />
-            <Route 
-              path="/kanban"
-              element={user ? <Kanban /> : <Navigate to="/login" />}
-            />
-
           </Routes>
         </div>
         <Footer />

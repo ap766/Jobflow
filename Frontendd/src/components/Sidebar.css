@@ -35,15 +35,15 @@
 }
 
 .add-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 20px 40px; /* Increase padding to make the button larger */
+  font-size: 20px; /* Increase font size to make the text larger */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
   
   .add-button:hover {
     background-color: #0056b3;

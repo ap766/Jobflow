@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 import React from "react";
 import styled from "styled-components";
-import Task from "./Task";
+import Card from "./Card";
 import "./scroll.css";
-import TaskContext from "../context/TaskContext";
+import JobContext from "../context/JobContext";
 import { Droppable } from "react-beautiful-dnd";
 import { useAuthContext } from "../hooks/useAuthContext"
 import BoardIdContext from '../context/BoardIdContext';
@@ -51,7 +51,7 @@ export default function Column({ title, tasks, id }) {
     //the header id refers to for the column
     const {user} = useAuthContext()
     const { BoardId, setBoardId } = React.useContext(BoardIdContext);
-    const { completed,setCompleted,incomplete,setIncomplete,inReview,setInReview ,backlog,setBacklog,} = React.useContext(TaskContext);
+    const { interested,setInterested,applied,setApplied,interview,setInterview ,final,setFinal,} = React.useContext(JobContext);
     console.log("these are the tasks")
     console.log(tasks)
     console.log(title)
@@ -64,22 +64,22 @@ export default function Column({ title, tasks, id }) {
             title: "Untitled",     
             section: title,
             id: newId
-            // Assuming default is incomplete
+            // Assuming default is applied
         };
     console.log("heiii")
         // Depending on the column's ID, update the corresponding state
         switch (id) {
             case "1": // INTERESTED
-                setIncomplete(prevIncomplete => [newTask, ...prevIncomplete]);
+                setApplied(prevApplied => [newTask, ...prevApplied]);
                 break;
             case "2": // APPLIED
-                setCompleted(prevCompleted => [newTask, ...prevCompleted]);
+                setInterested(prevInterested => [newTask, ...prevInterested]);
                 break;
             case "3": // ROUNDS/INTERVIEWS
-                setInReview(prevInReview => [newTask, ...prevInReview]);
+                setInterview(prevInterview => [newTask, ...prevInterview]);
                 break;
-            case "4": // HEARDBACK
-                setBacklog(prevBacklog => [newTask, ...prevBacklog]);
+            case "4": // FINAL
+                setFinal(prevFinal => [newTask, ...prevFinal]);
                 break;
             default:
                 break;
@@ -139,7 +139,7 @@ export default function Column({ title, tasks, id }) {
                     >
 
                         {tasks.map((task, index) => (
-                            <Task key={index} index={index} task={task} column={title}/>
+                            <Card key={index} index={index} task={task} column={title}/>
                         ))} 
 
 

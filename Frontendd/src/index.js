@@ -4,21 +4,18 @@ import './index.css';
 import App from './App';
 import { BrdContextProvider } from './context/BrdsContext';
 import { AuthContextProvider } from './context/AuthContext'
-import { TaskProvider } from './context/TaskContext'
-import { JobContextProvider } from './context/JobsContext'
+import { JobProvider } from './context/JobContext'
 import { BoardIdProvider } from './context/BoardIdContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <AuthContextProvider>
       <BoardIdProvider>
-      <JobContextProvider>
-      <TaskProvider>
+      <JobProvider>
     <BrdContextProvider>
     <App />
     </BrdContextProvider>
-    </TaskProvider>
-    </JobContextProvider>
+    </JobProvider>
     </BoardIdProvider>
   </AuthContextProvider>
 );

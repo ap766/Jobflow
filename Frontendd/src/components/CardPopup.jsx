@@ -1,7 +1,7 @@
 import React, { useState,useEffect} from "react";
 import Popup from "reactjs-popup";
 import styled from "styled-components";
-import TaskContext from "../context/TaskContext";
+import JobContext from "../context/JobContext";
 import { useAuthContext } from "../hooks/useAuthContext"
 import DatePicker from "react-datepicker";  
 import "react-datepicker/dist/react-datepicker.css";
@@ -96,14 +96,13 @@ const SaveButton = styled.button`
 `;
 
 
-export default function TaskPopup({ ID, isOpen, task, column,onClose}) {
-    console.log("task")
+export default function CardPopup({ ID, isOpen, task, column,onClose}) {
     console.log(task)
     const {user} = useAuthContext()
-    const [heardBack, setHeardBack] = useState(task.title === "HEARDBACK" ? task.additionalField : '');
+    // const [final, setFinal] = useState(task.title === "FINAL" ? task.additionalField : '');
     const [dates, setDates] = useState(task.dates ? task.dates : []);
     const [startDate, setStartDate] = useState(new Date());  
-    const { completed, setCompleted, incomplete, setIncomplete,inReview, setInReview,backlog, setBacklog} = React.useContext(TaskContext);
+    const { interested, setInterested, applied, setApplied,interview, setInterview,final, setFinal} = React.useContext(JobContext);
     const [editedTitle, setEditedTitle] = useState(task.title);
     const [editedDetails, setEditedDetails] = useState(task.description);
     const [editedLink, setEditedLink] = useState(task.joblink);
@@ -131,9 +130,9 @@ export default function TaskPopup({ ID, isOpen, task, column,onClose}) {
         switch (column) {
 
             case "INTERESTED":
-                await setIncomplete((prevIncomplete) => {
+                await setApplied((prevApplied) => {
                     updatedTask = { ...task, title: editedTitle, description: editedDetails, joblink: editedLink, roundtiming: dates, roundinfo: dateNotes };
-                    return prevIncomplete.map((item) =>
+                    return prevApplied.map((item) =>
                         item.id === task.id ? updatedTask : item
 
                   
@@ -142,7 +141,7 @@ export default function TaskPopup({ ID, isOpen, task, column,onClose}) {
                 });
                 break;
             case "APPLIED":
-                await setCompleted((prevComplete) => {
+                await setInterested((prevComplete) => {
                     updatedTask = { ...task, title: editedTitle, description: editedDetails, joblink: editedLink, roundtiming: dates, roundinfo: dateNotes };
                     return prevComplete.map((item) =>
                         item.id === task.id ? updatedTask : item
@@ -150,18 +149,18 @@ export default function TaskPopup({ ID, isOpen, task, column,onClose}) {
                 });
                 break;
             case "ROUNDS/INTERVIEWS":
-                await setInReview((prevInReview) => {
+                await setInterview((prevInterview) => {
                     updatedTask = { ...task, title: editedTitle, description: editedDetails, joblink: editedLink, roundtiming: dates,roundinfo: dateNotes };
-                    return prevInReview.map((item) =>
+                    return prevInterview.map((item) =>
                         item.id === task.id ? updatedTask : item
                     );
                 });
                 break;
-            case "HEARDBACK":
+            case "FINAL":
                
-                await  setBacklog((prevBacklog) => {
+                await  setFinal((prevFinal) => {
                     updatedTask = { ...task, title: editedTitle, description: editedDetails, joblink: editedLink, roundtiming: dates, roundinfo: dateNotes };
-                    return prevBacklog.map((item) =>
+                    return prevFinal.map((item) =>
                         item.id === task.id ? updatedTask : item
                     );
                 });
@@ -295,10 +294,9 @@ export default function TaskPopup({ ID, isOpen, task, column,onClose}) {
                 <button onClick={handleSave}>Save</button>
                 {console.log("tASKSSS")}
                 {console.log(task)}
-                {console.log(completed)}
-                {console.log(incomplete)}
-                {console.log(backlog)}
-                {console.log(inReview)}
+                {console.log(applied)}
+                {console.log(final)}
+                {console.log(interview)}
             </EditBox>
             )}
         </Popup>

@@ -22,7 +22,7 @@ Click the + button to add a new job to the respective column and furthur edit it
 ### 6) Set reminders for important dates and times
 Use the calender to remember important dates and times
 ![image](https://github.com/ap766/Jobflow/assets/79255079/3b3e4699-c15b-4f86-9c52-9f5b5996370b)
-### 7) Update application status by dragging it to the Applied,Rounds/Interviews,HeardBack columns
+### 7) Update application status by dragging it to the Applied,Rounds/Interviews,Final columns
 Move it to be the respective column
 ![image](https://github.com/ap766/Jobflow/assets/79255079/be918d12-4c27-4203-ac40-8567eb35ebf0)
 ### 8) Set Desktop Notifications so you dont miss any round! Also add notes - mentioning what it is along with the actual scheduled time

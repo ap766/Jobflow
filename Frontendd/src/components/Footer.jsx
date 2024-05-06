@@ -12,9 +12,9 @@ const Footer = () => {
                     <p>ap766</p>
                 </div>
             </div>
-            <div className="footer-bottom">
+            {/* <div className="footer-bottom">
                 <p>Made by <span>Anisha</span></p>
-            </div>
+            </div> */}
         </footer>
     );
 };

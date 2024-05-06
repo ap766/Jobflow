@@ -9,6 +9,29 @@ const StyledPopupContent = styled.div`
   padding: 20px;
 `;
 
+const StyledButton = styled.button`
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #6c757d;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #5a6268;
+  }`;
+
+
+const CancelButton = styled(StyledButton)`
+  background-color: #6c757d;
+  
+  &:hover {
+    background-color: #5a6268;
+  }`;
+
+
 const BoardPopup = ({ board, isOpen, onClose }) => {
   const { user } = useAuthContext();
   const [newTitle, setNewTitle] = useState('');
@@ -57,8 +80,8 @@ const BoardPopup = ({ board, isOpen, onClose }) => {
           value={newTitle}
           onChange={handleInputChange}
         />
-        <button onClick={handleSave}>Save</button>
-        <button onClick={onClose}>Cancel</button>
+        <StyledButton onClick={handleSave}>Save</StyledButton>
+        <CancelButton onClick={onClose}>Cancel</CancelButton>
       </StyledPopupContent>
     </Popup>
   );

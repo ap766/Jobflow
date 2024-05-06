@@ -1,9 +1,9 @@
 import React, { useState,useEffect } from "react";
 import { Draggable } from "react-beautiful-dnd";
-import TaskContext from "../context/TaskContext";
+import JobContext from "../context/JobContext";
 import styled from "styled-components";
 import { DeleteOutlined } from "@ant-design/icons"; // Importing the delete icon from Ant Design
-import TaskPopup from "./TaskPopup";
+import CardPopup from "./CardPopup";
 import { useAuthContext } from "../hooks/useAuthContext"
 
 
@@ -36,21 +36,21 @@ function bgcolorChange(props) {
   return props.isDragging
     ? "lightgreen"
     : props.isDraggable
-    ? props.isBacklog
+    ? props.isFinal
     ? "#F2D7D5"
     : "#DCDCDC"
-    : props.isBacklog
+    : props.isFinal
     ? "#F2D7D5"
     : "#EAF4FC";
 }
 
 
-export default function Task({ task, index, onSave, column }) {
+export default function Card({ task, index, onSave, column }) {
   const {user} = useAuthContext()
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(task.title);
   const [editedDetails, setEditedDetails] = useState(task.details);
-  const { completed, setCompleted, incomplete, setIncomplete, inReview, setInReview ,backlog, setBacklog} = React.useContext(TaskContext);
+  const { interested, setInterested, applied, setApplied, interview, setInterview ,final, setFinal} = React.useContext(JobContext);
     // Reset isEditing state whenever task changes
     useEffect(() => {
       setIsEditing(false);
@@ -67,16 +67,16 @@ export default function Task({ task, index, onSave, column }) {
     // Implement delete functionality here
     switch (column) {
       case "INTERESTED":
-        setIncomplete((prevIncomplete) => prevIncomplete.filter((item) => item.id !== task.id));
+        setApplied((prevApplied) => prevApplied.filter((item) => item.id !== task.id));
         break;
       case "APPLIED":
-        setCompleted((prevComplete) => prevComplete.filter((item) => item.id !== task.id));
+        setInterested((prevComplete) => prevComplete.filter((item) => item.id !== task.id));
         break;
       case "ROUNDS/INTERVIEWS":
-        setInReview((prevReview) => prevReview.filter((item) => item.id !== task.id));
+        setInterview((prevReview) => prevReview.filter((item) => item.id !== task.id));
         break;
-      case "HEARDBACK":
-        setBacklog((prevBacklog) => prevBacklog.filter((item) => item.id !== task.id));
+      case "FINAL":
+        setFinal((prevFinal) =>prevFinal.filter((item) => item.id !== task.id));
         break;
       default:
         break;
@@ -135,7 +135,7 @@ export default function Task({ task, index, onSave, column }) {
       </Draggable>
 
       {isEditing && (
-        <TaskPopup
+        <CardPopup
          ID={task.id}
           isOpen={isEditing}
           task={task}

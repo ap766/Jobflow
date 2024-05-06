@@ -1,6 +1,4 @@
 //Controllers: Controllers are responsible for handling incoming requests, processing them, and sending back appropriate responses. They act as intermediaries between the routes (which define URL endpoints) and the data model or services.
-
-
 const Bd = require('../models/BoardsModel');
 const mongoose = require('mongoose')
 
