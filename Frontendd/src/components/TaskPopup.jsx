@@ -6,6 +6,7 @@ import { useAuthContext } from "../hooks/useAuthContext"
 import DatePicker from "react-datepicker";  
 import "react-datepicker/dist/react-datepicker.css";
 
+
 const EditBox = styled.div`
     padding: 20px;
     border-radius: 12px;
@@ -92,7 +93,7 @@ export default function TaskPopup({ ID, isOpen, task, column }) {
     const [heardBack, setHeardBack] = useState(task.title === "HEARDBACK" ? task.additionalField : '');
     const [dates, setDates] = useState(task.dates ? task.dates : []);
     const [startDate, setStartDate] = useState(new Date());  
-    const { completed, setCompleted, incomplete, setIncomplete, backlog, setBacklog, inReview, setInReview } = React.useContext(TaskContext);
+    const { completed, setCompleted, incomplete, setIncomplete,inReview, setInReview,backlog, setBacklog} = React.useContext(TaskContext);
     const [editedTitle, setEditedTitle] = useState(task.title);
     const [editedDetails, setEditedDetails] = useState(task.description);
     const [editedLink, setEditedLink] = useState(task.joblink);
@@ -109,6 +110,8 @@ export default function TaskPopup({ ID, isOpen, task, column }) {
             setDateNotes(task.roundinfo);
         }
     }, [isOpen, task]);
+
+
     const handleSave = async () => {
         // Determine the column of the edited task
         // Update the state based on the column
@@ -136,17 +139,18 @@ export default function TaskPopup({ ID, isOpen, task, column }) {
                 });
                 break;
             case "ROUNDS/INTERVIEWS":
-                await setBacklog((prevBacklog) => {
+                await setInReview((prevInReview) => {
                     updatedTask = { ...task, title: editedTitle, description: editedDetails, joblink: editedLink, roundtiming: dates,roundinfo: dateNotes };
-                    return prevBacklog.map((item) =>
+                    return prevInReview.map((item) =>
                         item.id === task.id ? updatedTask : item
                     );
                 });
                 break;
             case "HEARDBACK":
-                await setInReview((prevInReview) => {
+               
+                await  setBacklog((prevBacklog) => {
                     updatedTask = { ...task, title: editedTitle, description: editedDetails, joblink: editedLink, roundtiming: dates, roundinfo: dateNotes };
-                    return prevInReview.map((item) =>
+                    return prevBacklog.map((item) =>
                         item.id === task.id ? updatedTask : item
                     );
                 });
@@ -155,15 +159,15 @@ export default function TaskPopup({ ID, isOpen, task, column }) {
                 break;
         }
     
+
+        //to update in database whenever user enters their application details
         try {
-            const istDates = dates.map(date => new Date(date).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }));
-            console.log('IST Dates:', istDates);
-            console.log(dates);
-            console.log(dateNotes);
+
+            //if dates is defined 
+            const istDates = dates && dates.length > 0 ? dates.map(date => new Date(date).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })) : [];
             console.log("Updating task...");
-            console.log(task.id);
             const response = await fetch(`/api/JobAppSteps/${ID}`, {
-                method: 'PATCH', // or 'PUT'
+                method: 'PATCH', 
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${user.token}`
@@ -174,15 +178,18 @@ export default function TaskPopup({ ID, isOpen, task, column }) {
             if (!response.ok) {
                 throw new Error('Failed to update task');
             }
-    
+
             console.log("Task updated successfully.");
     
-            // Update the task object with the new values
+            //Update the task object with the new values, to make the frontend more 
             task.title = editedTitle;
             task.description = editedDetails;
             task.joblink = editedLink;
             task.roundtiming = dates;
             task.roundinfo = dateNotes;
+            task.roundtiming = istDates;
+            task.roundinfo = dateNotes;
+
         } catch (error) {
             console.error('Error updating task:', error);
         }
@@ -190,12 +197,22 @@ export default function TaskPopup({ ID, isOpen, task, column }) {
         console.log("Save operation completed.");
     };
     
-    
+    //This is to add dates 
     const handleAddDate = () => {
-        if (dates.length < 6) {
+        console.log("In here")
+        console.log("Something here")
+        console.log(dates)
+
+        //if there are existing ones
+        if (dates ) {
             setDates([...dates, new Date()]);
             setDateNotes([...dateNotes, ""]);
+        }
 
+        //if none exist from before
+        else{
+            setDates([new Date()]);
+            setDateNotes([""]);
         }
     };
 

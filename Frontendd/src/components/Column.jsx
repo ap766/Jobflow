@@ -51,10 +51,11 @@ export default function Column({ title, tasks, id }) {
     //the header id refers to for the column
     const {user} = useAuthContext()
     const { BoardId, setBoardId } = React.useContext(BoardIdContext);
-    const { completed,setCompleted,incomplete,setIncomplete,backlog,setBacklog,inReview,setInReview } = React.useContext(TaskContext);
+    const { completed,setCompleted,incomplete,setIncomplete,inReview,setInReview ,backlog,setBacklog,} = React.useContext(TaskContext);
     console.log("these are the tasks")
     console.log(tasks)
     console.log(title)
+    
 
     const handleAddButtonClick = async () => {
         const newId = uuidv4();
@@ -89,7 +90,7 @@ export default function Column({ title, tasks, id }) {
  const combinData = { ...newTask, board_id: BoardId };
  console.log(combinData)
 
-
+        //Storing a new Application called untitled in the database
         try {
             const response = await fetch("/api/JobAppSteps/", {
                 method: "POST",
@@ -126,7 +127,6 @@ export default function Column({ title, tasks, id }) {
                 }}
             >
                 {title}
-
                  {/* + Button */}
                  <AddButton onClick={handleAddButtonClick}> + </AddButton>
             </Title>

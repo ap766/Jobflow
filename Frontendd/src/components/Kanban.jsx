@@ -11,7 +11,7 @@ export default function Kanban() {
     const { BoardId, setBoardId } = React.useContext(BoardIdContext);
     const { user } = useAuthContext();
 
-    const { completed, setCompleted, incomplete, setIncomplete, backlog, setBacklog, inReview, setInReview } = React.useContext(TaskContext);
+    const { completed, setCompleted, incomplete, setIncomplete,  inReview, setInReview,backlog, setBacklog } = React.useContext(TaskContext);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,8 +36,8 @@ export default function Kanban() {
 
                 setIncomplete(interested);
                 setCompleted(applied);
-                setBacklog(rounds);
-                setInReview(heardBack);
+                setInReview(rounds);
+                setBacklog(heardBack);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }

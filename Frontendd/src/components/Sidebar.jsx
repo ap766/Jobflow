@@ -16,7 +16,7 @@ const Sidebar = () => {
   const [loading, setLoading] = useState(false);
 
   const { BoardId, setBoardId } = React.useContext(BoardIdContext);
-  const { completed, setCompleted, incomplete, setIncomplete, backlog, setBacklog, inReview, setInReview } = React.useContext(TaskContext);
+  const { completed, setCompleted, incomplete, setIncomplete, inReview, setInReview, backlog, setBacklog } = React.useContext(TaskContext);
   const [active, setActive] = useState('Learn Python');
 
   useEffect(() => {

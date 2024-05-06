@@ -48,7 +48,7 @@ export default function Task({ task, index, onSave, column }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(task.title);
   const [editedDetails, setEditedDetails] = useState(task.details);
-  const { completed, setCompleted, incomplete, setIncomplete, backlog, setBacklog, inReview, setInReview } = React.useContext(TaskContext);
+  const { completed, setCompleted, incomplete, setIncomplete, inReview, setInReview ,backlog, setBacklog} = React.useContext(TaskContext);
   const handleDoubleClick = () => {
     setIsEditing(true);
   };
