@@ -96,44 +96,44 @@ const SaveButton = styled.button`
 `;
 
 
-export default function CardPopup({ ID, isOpen, task, column,onClose}) {
-    console.log(task)
+export default function CardPopup({ ID, isOpen, card, column,onClose}) {
+    console.log(card)
     const {user} = useAuthContext()
-    // const [final, setFinal] = useState(task.title === "FINAL" ? task.additionalField : '');
-    const [dates, setDates] = useState(task.dates ? task.dates : []);
+    // const [final, setFinal] = useState(card.title === "FINAL" ? card.additionalField : '');
+    const [dates, setDates] = useState(card.dates ? card.dates : []);
     const [startDate, setStartDate] = useState(new Date());  
     const { interested, setInterested, applied, setApplied,interview, setInterview,final, setFinal} = React.useContext(JobContext);
-    const [editedTitle, setEditedTitle] = useState(task.title);
-    const [editedDetails, setEditedDetails] = useState(task.description);
-    const [editedLink, setEditedLink] = useState(task.joblink);
-    const [dateNotes, setDateNotes] = useState(task.dateNotes ? task.dateNotes : []);
+    const [editedTitle, setEditedTitle] = useState(card.title);
+    const [editedDetails, setEditedDetails] = useState(card.description);
+    const [editedLink, setEditedLink] = useState(card.joblink);
+    const [dateNotes, setDateNotes] = useState(card.dateNotes ? card.dateNotes : []);
     
     useEffect(() => {
-        if (isOpen && task) {
+        if (isOpen && card) {
             console.log("jobbblink")
-            console.log(task)
-            setEditedTitle(task.title);
-            setEditedDetails(task.description);
-            setEditedLink(task.joblink);
-            setDates(task.roundtiming);
-            setDateNotes(task.roundinfo);
+            console.log(card)
+            setEditedTitle(card.title);
+            setEditedDetails(card.description);
+            setEditedLink(card.joblink);
+            setDates(card.roundtiming);
+            setDateNotes(card.roundinfo);
         }
-    }, [isOpen, task]);
+    }, [isOpen, card]);
 
     
 
     const handleSave = async () => {
-        // Determine the column of the edited task
+        // Determine the column of the edited card
         // Update the state based on the column
         
-        let updatedTask;
+        let updatedCard;
         switch (column) {
 
             case "INTERESTED":
                 await setApplied((prevApplied) => {
-                    updatedTask = { ...task, title: editedTitle, description: editedDetails, joblink: editedLink, roundtiming: dates, roundinfo: dateNotes };
+                    updatedCard = { ...card, title: editedTitle, description: editedDetails, joblink: editedLink, roundtiming: dates, roundinfo: dateNotes };
                     return prevApplied.map((item) =>
-                        item.id === task.id ? updatedTask : item
+                        item.id === card.id ? updatedCard : item
 
                   
                     );
@@ -142,26 +142,26 @@ export default function CardPopup({ ID, isOpen, task, column,onClose}) {
                 break;
             case "APPLIED":
                 await setInterested((prevComplete) => {
-                    updatedTask = { ...task, title: editedTitle, description: editedDetails, joblink: editedLink, roundtiming: dates, roundinfo: dateNotes };
+                    updatedCard = { ...card, title: editedTitle, description: editedDetails, joblink: editedLink, roundtiming: dates, roundinfo: dateNotes };
                     return prevComplete.map((item) =>
-                        item.id === task.id ? updatedTask : item
+                        item.id === card.id ? updatedCard : item
                     );
                 });
                 break;
             case "ROUNDS/INTERVIEWS":
                 await setInterview((prevInterview) => {
-                    updatedTask = { ...task, title: editedTitle, description: editedDetails, joblink: editedLink, roundtiming: dates,roundinfo: dateNotes };
+                    updatedCard = { ...card, title: editedTitle, description: editedDetails, joblink: editedLink, roundtiming: dates,roundinfo: dateNotes };
                     return prevInterview.map((item) =>
-                        item.id === task.id ? updatedTask : item
+                        item.id === card.id ? updatedCard : item
                     );
                 });
                 break;
             case "FINAL":
                
                 await  setFinal((prevFinal) => {
-                    updatedTask = { ...task, title: editedTitle, description: editedDetails, joblink: editedLink, roundtiming: dates, roundinfo: dateNotes };
+                    updatedCard = { ...card, title: editedTitle, description: editedDetails, joblink: editedLink, roundtiming: dates, roundinfo: dateNotes };
                     return prevFinal.map((item) =>
-                        item.id === task.id ? updatedTask : item
+                        item.id === card.id ? updatedCard : item
                     );
                 });
                 break;
@@ -175,7 +175,7 @@ export default function CardPopup({ ID, isOpen, task, column,onClose}) {
 
             //if dates is defined 
             const istDates = dates && dates.length > 0 ? dates.map(date => new Date(date).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })) : [];
-            console.log("Updating task...");
+            console.log("Updating card...");
             const response = await fetch(`/api/JobAppSteps/${ID}`, {
                 method: 'PATCH', 
                 headers: {
@@ -186,22 +186,22 @@ export default function CardPopup({ ID, isOpen, task, column,onClose}) {
             });
     
             if (!response.ok) {
-                throw new Error('Failed to update task');
+                throw new Error('Failed to update card');
             }
 
-            console.log("Task updated successfully.");
+            console.log("Card updated successfully.");
     
-            //Update the task object with the new values, to make the frontend more 
-            task.title = editedTitle;
-            task.description = editedDetails;
-            task.joblink = editedLink;
-            task.roundtiming = dates;
-            task.roundinfo = dateNotes;
-            task.roundtiming = istDates;
-            task.roundinfo = dateNotes;
+            //Update the card object with the new values, to make the frontend more 
+            card.title = editedTitle;
+            card.description = editedDetails;
+            card.joblink = editedLink;
+            card.roundtiming = dates;
+            card.roundinfo = dateNotes;
+            card.roundtiming = istDates;
+            card.roundinfo = dateNotes;
 
         } catch (error) {
-            console.error('Error updating task:', error);
+            console.error('Error updating card:', error);
         }
     
         console.log("Save operation completed.");
@@ -293,7 +293,7 @@ export default function CardPopup({ ID, isOpen, task, column,onClose}) {
                 <button onClick={handleAddDate}>+</button>
                 <button onClick={handleSave}>Save</button>
                 {console.log("tASKSSS")}
-                {console.log(task)}
+                {console.log(card)}
                 {console.log(applied)}
                 {console.log(final)}
                 {console.log(interview)}

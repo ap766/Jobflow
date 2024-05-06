@@ -39,7 +39,7 @@ const Title = styled.h3`
     text-align: center;
 `;
 
-const TaskList = styled.div`
+const CardList = styled.div`
     padding: 3px;
     transistion: background-color 0.2s ease;
     background-color: #f4f5f7;
@@ -47,20 +47,20 @@ const TaskList = styled.div`
     min-height: 100px;
 `;
 
-export default function Column({ title, tasks, id }) {
+export default function Column({ title, cards, id }) {
     //the header id refers to for the column
     const {user} = useAuthContext()
     const { BoardId, setBoardId } = React.useContext(BoardIdContext);
     const { interested,setInterested,applied,setApplied,interview,setInterview ,final,setFinal,} = React.useContext(JobContext);
-    console.log("these are the tasks")
-    console.log(tasks)
+    console.log("these are the cards")
+    console.log(cards)
     console.log(title)
     
 
     const handleAddButtonClick = async () => {
         const newId = uuidv4();
-        // Create a new task object with a unique ID and default title
-        const newTask = {
+        // Create a new card object with a unique ID and default title
+        const newCard = {
             title: "Untitled",     
             section: title,
             id: newId
@@ -70,16 +70,16 @@ export default function Column({ title, tasks, id }) {
         // Depending on the column's ID, update the corresponding state
         switch (id) {
             case "1": // INTERESTED
-                setApplied(prevApplied => [newTask, ...prevApplied]);
+                setApplied(prevApplied => [newCard, ...prevApplied]);
                 break;
             case "2": // APPLIED
-                setInterested(prevInterested => [newTask, ...prevInterested]);
+                setInterested(prevInterested => [newCard, ...prevInterested]);
                 break;
             case "3": // ROUNDS/INTERVIEWS
-                setInterview(prevInterview => [newTask, ...prevInterview]);
+                setInterview(prevInterview => [newCard, ...prevInterview]);
                 break;
             case "4": // FINAL
-                setFinal(prevFinal => [newTask, ...prevFinal]);
+                setFinal(prevFinal => [newCard, ...prevFinal]);
                 break;
             default:
                 break;
@@ -87,7 +87,7 @@ export default function Column({ title, tasks, id }) {
     
  console.log("Hello we are here in button click");
  console.log("Pls luck be on my side")
- const combinData = { ...newTask, board_id: BoardId };
+ const combinData = { ...newCard, board_id: BoardId };
  console.log(combinData)
 
         //Storing a new Application called untitled in the database
@@ -99,19 +99,19 @@ export default function Column({ title, tasks, id }) {
                     "Authorization": `Bearer ${user.token}` // Include user token in the header
                 },
                 
-                body: JSON.stringify(combinData) // Convert newTask to JSON string
+                body: JSON.stringify(combinData) // Convert newCard to JSON string
             });
             if (response.ok) {
-                console.log("Task added successfully so gud");
+                console.log("Card added successfully so gud");
             }
     
             if (!response.ok) {
-                throw new Error("Failed to add new task");
+                throw new Error("Failed to add new card");
             }
           
         } catch (error) {
             console.log("ERROR LAND")
-            console.error("Error adding new task:", error);
+            console.error("Error adding new card:", error);
         }
     };
     
@@ -132,19 +132,19 @@ export default function Column({ title, tasks, id }) {
             </Title>
             <Droppable droppableId={id}>
                 {(provided, snapshot) => (
-                    <TaskList
+                    <CardList
                         ref={provided.innerRef}
                         {...provided.droppableProps}
                         isDraggingOver={snapshot.isDraggingOver}
                     >
 
-                        {tasks.map((task, index) => (
-                            <Card key={index} index={index} task={task} column={title}/>
+                        {cards.map((card, index) => (
+                            <Card key={index} index={index} card={card} column={title}/>
                         ))} 
 
 
                         {provided.placeholder}
-                    </TaskList>
+                    </CardList>
                 )}
             </Droppable>
         </Container>

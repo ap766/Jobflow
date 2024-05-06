@@ -29,10 +29,10 @@ export default function Kanban() {
                 }
                 const json = await response.json();
 
-                let interested = json.filter((task) => task.section === "INTERESTED");
-                let applied = json.filter((task) => task.section === "APPLIED");
-                let rounds = json.filter((task) => task.section === "ROUNDS/INTERVIEWS");
-                let final = json.filter((task) => task.section === "FINAL");
+                let interested = json.filter((card) => card.section === "INTERESTED");
+                let applied = json.filter((card) => card.section === "APPLIED");
+                let rounds = json.filter((card) => card.section === "ROUNDS/INTERVIEWS");
+                let final = json.filter((card) => card.section === "FINAL");
 
                 setApplied(interested);
                 setInterested(applied);
@@ -71,26 +71,26 @@ export default function Kanban() {
         const { destination, source, draggableId } = result;
         if (!destination || source.droppableId === destination.droppableId) return;
 
-        const task = findItemById(draggableId, [...applied, ...interested, ...interview, ...final]);
+        const card = findItemById(draggableId, [...applied, ...interested, ...interview, ...final]);
 
-        const updatedTask = { ...task }; // Create a copy of the task object
+        const updatedCard = { ...card }; // Create a copy of the card object
 
         switch (destination.droppableId) {
             case "1":
-                updatedTask.section = "INTERESTED";
+                updatedCard.section = "INTERESTED";
                 break;
             case "2":
-                updatedTask.section = "APPLIED";
+                updatedCard.section = "APPLIED";
                 break;
             case "3":
-                updatedTask.section = "ROUNDS/INTERVIEWS";
+                updatedCard.section = "ROUNDS/INTERVIEWS";
                 break;
             case "4":
-                updatedTask.section = "FINAL";
+                updatedCard.section = "FINAL";
                 break;
         }
 
-        // Make a PATCH request to update the task status on the backend
+        // Make a PATCH request to update the card status on the backend
         try {
             await fetch(`api/JobAppSteps/${draggableId}`, {
                 method: "PATCH",
@@ -99,46 +99,46 @@ export default function Kanban() {
                     Authorization: `Bearer ${user.token}`,
                 },
                 body: JSON.stringify({
-                    section: updatedTask.section,
+                    section: updatedCard.section,
                 }),
             });
 
             // Update the state after the PATCH request is successful
-            switch (updatedTask.section) {
+            switch (updatedCard.section) {
                 case "INTERESTED":
-                    setApplied(prevApplied => [...prevApplied, updatedTask]);
+                    setApplied(prevApplied => [...prevApplied, updatedCard]);
                     break;
                 case "APPLIED":
-                    setInterested(prevInterested=> [...prevInterested, updatedTask]);
+                    setInterested(prevInterested=> [...prevInterested, updatedCard]);
                     break;
                 case "ROUNDS/INTERVIEWS":
-                    setInterview(prevInterview => [...prevInterview, updatedTask]);
+                    setInterview(prevInterview => [...prevInterview, updatedCard]);
                     break;
                 case "FINAL":
-                    setFinal(prevFinal => [...prevFinal, updatedTask]);
+                    setFinal(prevFinal => [...prevFinal, updatedCard]);
                     break;
             }
 
-            // Remove the task from the previous section
+            // Remove the card from the previous section
             deletePreviousState(source.droppableId, draggableId);
         } catch (error) {
-            console.error("Error updating task:", error);
+            console.error("Error updating card:", error);
         }
     };
 
-    function deletePreviousState(sourceDroppableId, taskId) {
+    function deletePreviousState(sourceDroppableId, cardId) {
         switch (sourceDroppableId) {
             case "1":
-                setApplied(prevApplied => removeItemById(taskId, prevApplied));
+                setApplied(prevApplied => removeItemById(cardId, prevApplied));
                 break;
             case "2":
-                setInterested(prevInterested => removeItemById(taskId, prevInterested));
+                setInterested(prevInterested => removeItemById(cardId, prevInterested));
                 break;
             case "3":
-                setInterview(prevInterview => removeItemById(taskId, prevInterview));
+                setInterview(prevInterview => removeItemById(cardId, prevInterview));
                 break;
             case "4":
-                setFinal(prevFinal => removeItemById(taskId, prevFinal));
+                setFinal(prevFinal => removeItemById(cardId, prevFinal));
                 break;
         }
     }
@@ -178,10 +178,10 @@ export default function Kanban() {
                             margin: "0 auto"
                         }}
                     >
-                        <Column title={"INTERESTED"} tasks={applied} id={"1"} />
-                        <Column title={"APPLIED"} tasks={interested} id={"2"} />
-                        <Column title={"ROUNDS/INTERVIEWS"} tasks={interview} id={"3"} />
-                        <Column title={"FINAL"} tasks={final} id={"4"} />
+                        <Column title={"INTERESTED"} cards={applied} id={"1"} />
+                        <Column title={"APPLIED"} cards={interested} id={"2"} />
+                        <Column title={"ROUNDS/INTERVIEWS"} cards={interview} id={"3"} />
+                        <Column title={"FINAL"} cards={final} id={"4"} />
                     </div>
                 </div>
             </DragDropContext>

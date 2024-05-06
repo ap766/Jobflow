@@ -45,16 +45,16 @@ function bgcolorChange(props) {
 }
 
 
-export default function Card({ task, index, onSave, column }) {
+export default function Card({ card, index, onSave, column }) {
   const {user} = useAuthContext()
   const [isEditing, setIsEditing] = useState(false);
-  const [editedTitle, setEditedTitle] = useState(task.title);
-  const [editedDetails, setEditedDetails] = useState(task.details);
+  const [editedTitle, setEditedTitle] = useState(card.title);
+  const [editedDetails, setEditedDetails] = useState(card.details);
   const { interested, setInterested, applied, setApplied, interview, setInterview ,final, setFinal} = React.useContext(JobContext);
-    // Reset isEditing state whenever task changes
+    // Reset isEditing state whenever card changes
     useEffect(() => {
       setIsEditing(false);
-    }, [task]);
+    }, [card]);
   
   const handleClose = () => {
     console.log("Hey its being set")
@@ -67,24 +67,24 @@ export default function Card({ task, index, onSave, column }) {
     // Implement delete functionality here
     switch (column) {
       case "INTERESTED":
-        setApplied((prevApplied) => prevApplied.filter((item) => item.id !== task.id));
+        setApplied((prevApplied) => prevApplied.filter((item) => item.id !== card.id));
         break;
       case "APPLIED":
-        setInterested((prevComplete) => prevComplete.filter((item) => item.id !== task.id));
+        setInterested((prevComplete) => prevComplete.filter((item) => item.id !== card.id));
         break;
       case "ROUNDS/INTERVIEWS":
-        setInterview((prevReview) => prevReview.filter((item) => item.id !== task.id));
+        setInterview((prevReview) => prevReview.filter((item) => item.id !== card.id));
         break;
       case "FINAL":
-        setFinal((prevFinal) =>prevFinal.filter((item) => item.id !== task.id));
+        setFinal((prevFinal) =>prevFinal.filter((item) => item.id !== card.id));
         break;
       default:
         break;
     }
   
-    // Call API to delete the task
+    // Call API to delete the card
     try {
-      const response = await fetch(`/api/JobAppSteps/${task.id}`, {
+      const response = await fetch(`/api/JobAppSteps/${card.id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -92,17 +92,17 @@ export default function Card({ task, index, onSave, column }) {
         },
       });
       if (!response.ok) {
-        throw new Error("Failed to delete task");
+        throw new Error("Failed to delete card");
       }
     } catch (error) {
-      console.error("Error deleting task:", error);
+      console.error("Error deleting card:", error);
     }
   };
   
 
   return (
     <>
-      <Draggable draggableId={`${task.id}`} key={task.id} index={index}>
+      <Draggable draggableId={`${card.id}`} key={card.id} index={index}>
         {(provided, snapshot) => (
           <>
             <Container
@@ -121,7 +121,7 @@ export default function Card({ task, index, onSave, column }) {
                 </span>
               </div>
               <div style={{ display: "flex", justifyContent: "center", padding: 2 }}>
-                <TextContent>{task.title}</TextContent>
+                <TextContent>{card.title}</TextContent>
               </div>
               <Icons>
                 <div>
@@ -136,9 +136,9 @@ export default function Card({ task, index, onSave, column }) {
 
       {isEditing && (
         <CardPopup
-         ID={task.id}
+         ID={card.id}
           isOpen={isEditing}
-          task={task}
+          card={card}
           column={column}
           onClose={handleClose}
         />

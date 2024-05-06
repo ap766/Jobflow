@@ -8,7 +8,6 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import BoardIdContext from '../context/BoardIdContext';
 
 
-
 const Sidebar = () => {
   const { user } = useAuthContext();
   const { brds, dispatch } = useBrdsContext();
@@ -49,16 +48,16 @@ const Sidebar = () => {
   
 
   //this is to rename the board
-  const handleClick = (task) => {
-    setActive(task);
+  const handleClick = (card) => {
+    setActive(card);
     setIsOpen(true);
   };
 
-  const handleAddTask = async () => {
+  const handleAddCard = async () => {
     try {
-      const taskData = {
+      const cardData = {
         title: 'New Title',
-        description: 'New Task Description',
+        description: 'New card Description',
       };
 
       const response = await fetch('/api/Board/', {
@@ -67,35 +66,35 @@ const Sidebar = () => {
           'Authorization': `Bearer ${user.token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(taskData)
+        body: JSON.stringify(cardData)
       });
 
       if (!response.ok) {
-        throw new Error('Failed to add new task');
+        throw new Error('Failed to add new card');
       }
 
-      const newTask = await response.json();
-      dispatch({ type: 'CREATE_BRD', payload: newTask });
+      const newcard = await response.json();
+      dispatch({ type: 'CREATE_BRD', payload: newcard });
     } catch (error) {
-      console.error('Error adding new task:', error);
+      console.error('Error adding new card:', error);
     }
   };
-  const handleSingleClick = (task) => {
-    setActive(task);
+  const handleSingleClick = (card) => {
+    setActive(card);
     // Show loading screen
     setLoading(true);
 
     // Simulate an asynchronous operation (e.g., API call)
     setTimeout(() => {
       // Update the board ID in the state
-      setBoardId(task._id);
+      setBoardId(card._id);
       setLoading(false); // Hide loading screen
     }, 2000); // Simulated delay for demonstration
   };
 
 
 
-  const handleDeleteTask = async (boardId) => {
+  const handleDeleteCard = async (boardId) => {
     try {
       const response = await fetch(`/api/Board/${boardId}`, {
         method: 'DELETE',
@@ -136,7 +135,7 @@ const Sidebar = () => {
     <button onClick={()=>handleClick(board)}className="edit-button">
       Edit
     </button>
-    <button onClick={() => handleDeleteTask(board._id)} className="delete-button">
+    <button onClick={() => handleDeleteCard(board._id)} className="delete-button">
       Delete
     </button>
   </div>
@@ -146,7 +145,7 @@ const Sidebar = () => {
 
              
         </ul>
-        <button className="add-button" onClick={handleAddTask}>
+        <button className="add-button" onClick={handleAddCard}>
           <span className="plus-icon"></span> ADD BOARD
         </button>
 

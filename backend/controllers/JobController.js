@@ -39,7 +39,7 @@ try {
 //   res.status(200).json(job)
 // }
 
-// create a new workout
+// create a new 
 const createJob= async (req, res) => {
   console.log(req)
   const { title, section,id,board_id} = req.body;

@@ -17,16 +17,16 @@ router.use(requireAuth)
 
 //router.get('/', getJobs)
 
-// GET a single workout
+// GET a single card/job
 router.get('/:id', getJobs)
 
-// POST a new workout
+// POST a new card/job
 router.post('/', createJob)
 
-// DELETE a workout
+// DELETE a card/job
 router.delete('/:id', deleteJob)
 
-// UPDATE a workout
+// UPDATE a card/job
 router.patch('/:id', updateJob)
 
 //UPDATE all of a user

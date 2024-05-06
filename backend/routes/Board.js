@@ -17,16 +17,16 @@ router.use(requireAuth)
 
 router.get('/', getBoards)
 
-// GET a single workout
+// GET a single board
 router.get('/:id', getBoard)
 
-// POST a new workout
+// POST a new board
 router.post('/', createBoard)
 
-// DELETE a workout
+// DELETE a board
 router.delete('/:id', deleteBoard)
 
-// UPDATE a workout
+// UPDATE a board
 router.patch('/:id', updateBoard)
 
 module.exports = router
