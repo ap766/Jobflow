@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import TaskContext from "../context/TaskContext";
 import styled from "styled-components";
@@ -51,7 +51,13 @@ export default function Task({ task, index, onSave, column }) {
   const [editedTitle, setEditedTitle] = useState(task.title);
   const [editedDetails, setEditedDetails] = useState(task.details);
   const { completed, setCompleted, incomplete, setIncomplete, inReview, setInReview ,backlog, setBacklog} = React.useContext(TaskContext);
+    // Reset isEditing state whenever task changes
+    useEffect(() => {
+      setIsEditing(false);
+    }, [task]);
+  
   const handleClose = () => {
+    console.log("Hey its being set")
     setIsEditing(false);
   };
   const handleDoubleClick = () => {
