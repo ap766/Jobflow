@@ -46,11 +46,12 @@ const Sidebar = () => {
       fetchBoards();
     }
   }, [dispatch, user]);
+  
 
+  //this is to rename the board
   const handleClick = (task) => {
     setActive(task);
     setIsOpen(true);
-
   };
 
   const handleAddTask = async () => {
@@ -80,6 +81,7 @@ const Sidebar = () => {
     }
   };
   const handleSingleClick = (task) => {
+    setActive(task);
     // Show loading screen
     setLoading(true);
 
@@ -123,15 +125,22 @@ const Sidebar = () => {
   <li key={index}>
     <span
       className={active.title == board.title ? 'active board-title' : 'board-title'}
-      onClick={() => handleClick(board)}
+      // onClick={() => handleClick(board)}
       onDoubleClick={() => handleSingleClick(board)}
 
     >
       {board.title}
     </span>
+    <span>
+  <div className="button-container">
+    <button onClick={()=>handleClick(board)}className="edit-button">
+      Edit
+    </button>
     <button onClick={() => handleDeleteTask(board._id)} className="delete-button">
       Delete
     </button>
+  </div>
+</span>
   </li>
 ))}
 

@@ -11,7 +11,10 @@
     color: #040006;
     padding: 10px;
 }
-
+.button-container {
+  display: flex;
+  gap: 10px; /* Optional: adds some space between the buttons */
+}
 .sidebar-content {
     padding: 10px;
 }
@@ -58,9 +61,30 @@
     cursor: pointer; /* Change cursor to pointer on hover */
     margin-left: 5px; /* Add margin to separate from the board title */
   }
-  
+  .edit-button{
+    
+      background-color: lightblue; /* Red background color */
+      color: #fff; /* White text color */
+      border: none; /* Remove border */
+      border-radius: 5px; /* Add border-radius for rounded corners */
+      padding: 8px 16px; /* Add padding */
+      cursor: pointer; /* Change cursor to pointer on hover */
+      margin-left: 5px; /* Add margin to separate from the board title */
+    
+    
+  }
   .delete-button:hover {
     background-color:rgb(25, 160, 205); /* Darker shade on hover */
+  }
+  .edit-button:hover{
+    background-color:rgb(25, 160, 205); /* Darker shade on hover */
+  }
+  .board-title{
+    padding: 8px 0;
+    cursor: pointer;
+    text-align: center;
+    font-size: 20px;
+  
   }
   .board-title.active {
   background-color: #e8f0fe; /* Change to your preferred highlight color */
