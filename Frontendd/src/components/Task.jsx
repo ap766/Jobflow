@@ -7,6 +7,7 @@ import TaskPopup from "./TaskPopup";
 import { useAuthContext } from "../hooks/useAuthContext"
 
 
+
 const Container = styled.div`
   border-radius: 10px;
   box-shadow: 5px 5px 5px 2px grey;
@@ -43,12 +44,16 @@ function bgcolorChange(props) {
     : "#EAF4FC";
 }
 
+
 export default function Task({ task, index, onSave, column }) {
   const {user} = useAuthContext()
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(task.title);
   const [editedDetails, setEditedDetails] = useState(task.details);
   const { completed, setCompleted, incomplete, setIncomplete, inReview, setInReview ,backlog, setBacklog} = React.useContext(TaskContext);
+  const handleClose = () => {
+    setIsEditing(false);
+  };
   const handleDoubleClick = () => {
     setIsEditing(true);
   };
@@ -129,6 +134,7 @@ export default function Task({ task, index, onSave, column }) {
           isOpen={isEditing}
           task={task}
           column={column}
+          onClose={handleClose}
         />
       )}
     </>

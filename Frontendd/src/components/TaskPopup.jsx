@@ -20,6 +20,16 @@ const EditBox = styled.div`
     margin: auto; /* Centering the box horizontally */
 `;
 
+const CloseButton = styled.button`
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+`;
+
 const InputField = styled.input`
     width: 100%;
     margin-bottom: 15px; /* Increased margin bottom */
@@ -86,7 +96,7 @@ const SaveButton = styled.button`
 `;
 
 
-export default function TaskPopup({ ID, isOpen, task, column }) {
+export default function TaskPopup({ ID, isOpen, task, column,onClose}) {
     console.log("task")
     console.log(task)
     const {user} = useAuthContext()
@@ -111,6 +121,7 @@ export default function TaskPopup({ ID, isOpen, task, column }) {
         }
     }, [isOpen, task]);
 
+    
 
     const handleSave = async () => {
         // Determine the column of the edited task
@@ -199,16 +210,11 @@ export default function TaskPopup({ ID, isOpen, task, column }) {
     
     //This is to add dates 
     const handleAddDate = () => {
-        console.log("In here")
-        console.log("Something here")
-        console.log(dates)
-
         //if there are existing ones
         if (dates ) {
             setDates([...dates, new Date()]);
             setDateNotes([...dateNotes, ""]);
         }
-
         //if none exist from before
         else{
             setDates([new Date()]);
@@ -217,6 +223,9 @@ export default function TaskPopup({ ID, isOpen, task, column }) {
     };
 
     const handleDateChange = (index, date) => {
+        console.log("In date change")
+        console.log(typeof date); // Add this line
+        console.log(date)
         const newDates = [...dates];
         newDates[index] = date;
         setDates(newDates);
@@ -230,7 +239,11 @@ export default function TaskPopup({ ID, isOpen, task, column }) {
 
     return (
         <Popup open={isOpen} modal>
+             {(close) => (
             <EditBox>
+                
+                <CloseButton onClick={() => {onClose(); close();}}>x</CloseButton>
+
                 Job Title:
                 <InputField
                     type="text"
@@ -263,7 +276,7 @@ export default function TaskPopup({ ID, isOpen, task, column }) {
     <DateField key={index}>
         <DatePickerWrapper>
             <DatePicker
-                selected={date}
+                selected={dates[index] instanceof Date ? dates[index] : new Date(dates[index])} //this fixed the e.fullyear error
                 onChange={(date) => handleDateChange(index, date)}
                 showTimeSelect
                 dateFormat="MM/dd/yyyy h:mm aa"
@@ -287,6 +300,7 @@ export default function TaskPopup({ ID, isOpen, task, column }) {
                 {console.log(backlog)}
                 {console.log(inReview)}
             </EditBox>
+            )}
         </Popup>
     );
 }
