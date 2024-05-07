@@ -18,7 +18,6 @@ const Navbar = () => {
         </Link>
         <nav>
           {user && (
-
 <>
             <div>
                    <span class="email">{user.email}</span>
@@ -30,11 +29,9 @@ const Navbar = () => {
                <img class="dashboard-link" src={require('./profile-user.png')}alt="dashboard" />
               </Link>
          
-            </div>
-            
+            </div>   
             </>
 
-            
           )}
           {!user && (
             <div>

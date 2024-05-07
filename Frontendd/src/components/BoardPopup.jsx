@@ -1,3 +1,7 @@
+//PATCH to update Board Title
+//Using Board id 
+
+
 import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 import { useBrdsContext } from '../hooks/useBrdsContext';
@@ -59,7 +63,7 @@ const BoardPopup = ({ board, isOpen, onClose }) => {
       if (!response.ok) {
         throw new Error('Failed to update board');
       }
-
+      
       // Update the board in the global state
       dispatch({ type: 'UPDATE_BRD', payload: updatedBoard });
 

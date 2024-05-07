@@ -10,9 +10,8 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    await signup(email, password)//things start here from sending the request
+    await signup(email, password)
 
-    //onsole.log(email, password)
   }
 
   return (

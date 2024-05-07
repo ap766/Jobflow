@@ -1,3 +1,6 @@
+//PATCH
+//used to edit the card details and save them in the database
+//(once things are changed )
 import React, { useState,useEffect} from "react";
 import Popup from "reactjs-popup";
 import styled from "styled-components";
@@ -65,87 +68,93 @@ const DateNotesInput = styled.input`
     border-radius: 6px;
     border: 1px solid #ccc;
 `;
+;
 
-
-const AddDateButton = styled.button`
-    padding: 10px 20px; /* Increased padding */
-    border: none;
-    border-radius: 6px;
-    background-color: #007bff; /* Changed background color */
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
-    &:hover {
-        background-color: #0056b3; /* Darker shade on hover */
-    }
+const AddButton = styled.button`
+  background-color: #384C5D;
+  border: none;
+  color: white;
+  padding: 10px 32px; /* Adjusted padding */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px; /* Adjust this value as needed */
 `;
 
 const SaveButton = styled.button`
-    padding: 12px 24px; /* Increased padding */
-    border: none;
-    border-radius: 6px;
-    background-color: #28a745; /* Green color for save button */
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
-    &:hover {
-        background-color: #218838; /* Darker shade on hover */
-    }
+  background-color: #384C5D;
+  border: none;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px; /* Adjust this value as needed */
 `;
 
 
 export default function CardPopup({ ID, isOpen, card, column,onClose}) {
-    console.log(card)
+    
+    //User property extracted from the object(value provided by AuthContext.Provider) which currents current state of the authentication context and a dispatch function to update that state
     const {user} = useAuthContext()
-    // const [final, setFinal] = useState(card.title === "FINAL" ? card.additionalField : '');
-    const [dates, setDates] = useState(card.dates ? card.dates : []);
-    const [startDate, setStartDate] = useState(new Date());  
+
+    //interested,applied,interview,final are the states that are used to store the data fetched from the backend and they are global
     const { interested, setInterested, applied, setApplied,interview, setInterview,final, setFinal} = React.useContext(JobContext);
+
+    
+    const [dates, setDates] = useState(card.dates ? card.dates : []);  
+
     const [editedTitle, setEditedTitle] = useState(card.title);
+
     const [editedDetails, setEditedDetails] = useState(card.description);
+
     const [editedLink, setEditedLink] = useState(card.joblink);
+
     const [dateNotes, setDateNotes] = useState(card.dateNotes ? card.dateNotes : []);
     
-    useEffect(() => {
-        if (isOpen && card) {
-            console.log("jobbblink")
-            console.log(card)
-            setEditedTitle(card.title);
-            setEditedDetails(card.description);
-            setEditedLink(card.joblink);
-            setDates(card.roundtiming);
-            setDateNotes(card.roundinfo);
-        }
-    }, [isOpen, card]);
-
     
+    //So see we are getting the new value of value right from kanban->column->card->and hence since code is changed when this popup is opened it printed all our old changed values(from the global variables indirectly) , so
+    //even date and date notes are stored that way but when we want to add a new one , somehow the gobal variables are modified after being fine , so we have to use card.... to change it again cus idk its just changed so 
+    //So i observed that editedTitle,etc gets changed right away but somehow dates and datesNotes arent updated like that idk why
+
+    useEffect(() => {
+
+         if (card) {
+           setDates(card.roundtiming);
+           setDateNotes(card.roundinfo);
+        }
+    }, [card]);
+
+
+    //The functions are handleSave,handleAddDate,handleDateChange,handleNoteChange
 
     const handleSave = async () => {
-        // Determine the column of the edited card
-        // Update the state based on the column
         
         let updatedCard;
         switch (column) {
-
             case "INTERESTED":
-                await setApplied((prevApplied) => {
-                    updatedCard = { ...card, title: editedTitle, description: editedDetails, joblink: editedLink, roundtiming: dates, roundinfo: dateNotes };
-                    return prevApplied.map((item) =>
-                        item.id === card.id ? updatedCard : item
-
-                  
-                    );
-                
-                });
-                break;
-            case "APPLIED":
                 await setInterested((prevComplete) => {
                     updatedCard = { ...card, title: editedTitle, description: editedDetails, joblink: editedLink, roundtiming: dates, roundinfo: dateNotes };
                     return prevComplete.map((item) =>
                         item.id === card.id ? updatedCard : item
                     );
+                });
+
+                break;
+
+            case "APPLIED":
+                await setApplied((prevApplied) => {
+                    updatedCard = { ...card, title: editedTitle, description: editedDetails, joblink: editedLink, roundtiming: dates, roundinfo: dateNotes };
+                    return prevApplied.map((item) =>
+                        item.id === card.id ? updatedCard : item
+
+                    );
+                
                 });
                 break;
             case "ROUNDS/INTERVIEWS":
@@ -190,15 +199,14 @@ export default function CardPopup({ ID, isOpen, card, column,onClose}) {
             }
 
             console.log("Card updated successfully.");
-    
-            //Update the card object with the new values, to make the frontend more 
-            card.title = editedTitle;
-            card.description = editedDetails;
-            card.joblink = editedLink;
-            card.roundtiming = dates;
-            card.roundinfo = dateNotes;
-            card.roundtiming = istDates;
-            card.roundinfo = dateNotes;
+              
+            /*confirm this not required*/
+            // //Update the card object with the new values, to make the frontend more 
+            // card.title = editedTitle;
+            // card.description = editedDetails;
+            // card.joblink = editedLink;
+            // card.roundtiming = istDates;
+            // card.roundinfo = dateNotes;
 
         } catch (error) {
             console.error('Error updating card:', error);
@@ -210,39 +218,46 @@ export default function CardPopup({ ID, isOpen, card, column,onClose}) {
     //This is to add dates 
     const handleAddDate = () => {
         //if there are existing ones
-        if (dates ) {
+        console.log("in that function")
+        if (dates) {
             setDates([...dates, new Date()]);
-            setDateNotes([...dateNotes, ""]);
+            setDateNotes([...dateNotes, ""])
         }
         //if none exist from before
         else{
             setDates([new Date()]);
             setDateNotes([""]);
         }
+        console.log("in handle add dates")
+        console.log(dates)
+        console.log(dateNotes)
     };
 
+    //The handleDateChange function is used to update a specific date in the dates state
+    //It takes an index and a date, creates a new array from the current dates state, 
+    //updates the date at the given index, and sets the new array as the new dates state.
     const handleDateChange = (index, date) => {
-        console.log("In date change")
-        console.log(typeof date); // Add this line
-        console.log(date)
         const newDates = [...dates];
         newDates[index] = date;
         setDates(newDates);
     };
 
+
+    //The handleNoteChange function is used to update a specific note in the dateNotes state
+    //It works similarly to the handleDateChange function.
     const handleNoteChange = (index, event) => {
+
         const newNotes = [...dateNotes];
         newNotes[index] = event.target.value;
         setDateNotes(newNotes);
     };
-
+    
+    
     return (
         <Popup open={isOpen} modal>
              {(close) => (
             <EditBox>
-                
                 <CloseButton onClick={() => {onClose(); close();}}>x</CloseButton>
-
                 Job Title:
                 <InputField
                     type="text"
@@ -271,6 +286,9 @@ export default function CardPopup({ ID, isOpen, card, column,onClose}) {
                 />
                 Add Important Dates:
                 <div>
+                    {/*n the render method, for each date in the dates state, a DateField component is rendered
+                . dates state, a DateField component is rendered. This component includes a DatePicker component for
+                selecting the date and a DateNotesInput component for entering the note related to the date.*/}
                 {dates && dates.map((date, index) => (
     <DateField key={index}>
         <DatePickerWrapper>
@@ -288,15 +306,9 @@ export default function CardPopup({ ID, isOpen, card, column,onClose}) {
         />
     </DateField>
 ))}
-
                 </div>
-                <button onClick={handleAddDate}>+</button>
-                <button onClick={handleSave}>Save</button>
-                {console.log("tASKSSS")}
-                {console.log(card)}
-                {console.log(applied)}
-                {console.log(final)}
-                {console.log(interview)}
+                <AddButton onClick={handleAddDate}>+</AddButton>
+                <SaveButton onClick={handleSave}>Save</SaveButton>
             </EditBox>
             )}
         </Popup>

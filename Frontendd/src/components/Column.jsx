@@ -1,3 +1,6 @@
+//POST 
+//to create new cards with Untitled title
+
 import { v4 as uuidv4 } from 'uuid';
 import React from "react";
 import styled from "styled-components";
@@ -48,32 +51,40 @@ const CardList = styled.div`
 `;
 
 export default function Column({ title, cards, id }) {
-    //the header id refers to for the column
-    const {user} = useAuthContext()
-    const { BoardId, setBoardId } = React.useContext(BoardIdContext);
-    const { interested,setInterested,applied,setApplied,interview,setInterview ,final,setFinal,} = React.useContext(JobContext);
-    console.log("these are the cards")
-    console.log(cards)
-    console.log(title)
-    
 
-    const handleAddButtonClick = async () => {
+    //The BoardId is used to fetch specific data related to a particular Kanban board,basically jobs/interships as per your search
+    const {BoardId} = React.useContext(BoardIdContext);
+
+    //User property extracted from the object(value provided by AuthContext.Provider) which currents current state of the authentication context and a dispatch function to update that state
+    const {user} = useAuthContext()
+
+    //interested,applied,interview,final are the states that are used to store the data fetched from the backend and they are global
+    const { setInterested,setApplied,setInterview ,setFinal} = React.useContext(JobContext);
+   
+
+    //Functions here include - AddNewCard
+
+
+    
+    const AddNewCard = async () => {
+
         const newId = uuidv4();
+
         // Create a new card object with a unique ID and default title
         const newCard = {
             title: "Untitled",     
             section: title,
             id: newId
-            // Assuming default is applied
         };
-    console.log("heiii")
+
+
         // Depending on the column's ID, update the corresponding state
         switch (id) {
             case "1": // INTERESTED
-                setApplied(prevApplied => [newCard, ...prevApplied]);
+                setInterested(prevInterested => [newCard, ...prevInterested]);
                 break;
             case "2": // APPLIED
-                setInterested(prevInterested => [newCard, ...prevInterested]);
+                setApplied(prevApplied => [newCard, ...prevApplied]);
                 break;
             case "3": // ROUNDS/INTERVIEWS
                 setInterview(prevInterview => [newCard, ...prevInterview]);
@@ -84,11 +95,11 @@ export default function Column({ title, cards, id }) {
             default:
                 break;
         }
-    
- console.log("Hello we are here in button click");
- console.log("Pls luck be on my side")
- const combinData = { ...newCard, board_id: BoardId };
- console.log(combinData)
+
+
+        // Combine new card with the board ID
+        const combinData = { ...newCard, board_id: BoardId };
+       
 
         //Storing a new Application called untitled in the database
         try {
@@ -114,8 +125,6 @@ export default function Column({ title, cards, id }) {
             console.error("Error adding new card:", error);
         }
     };
-    
-
 
     return (
         <Container className="column">
@@ -123,15 +132,17 @@ export default function Column({ title, cards, id }) {
                 style={{
                     backgroundColor: "lightblue",
                     position: "sticky",
-                    
                 }}
             >
                 {title}
-                 {/* + Button */}
-                 <AddButton onClick={handleAddButtonClick}> + </AddButton>
+    
+                 <AddButton onClick={AddNewCard}> + </AddButton>
             </Title>
+
+            
             <Droppable droppableId={id}>
                 {(provided, snapshot) => (
+
                     <CardList
                         ref={provided.innerRef}
                         {...provided.droppableProps}

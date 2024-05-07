@@ -3,9 +3,9 @@ import React from 'react';
 import Popup from "reactjs-popup";
 import './InitialPopup.css';
 
-const InitialPopup = ({ isOpen, onClose }) => {
+const InitialPopup = ({ isOpen }) => {
   return (
-    <Popup open={isOpen} modal contentStyle={{ background: 'white' }} onClose={onClose}>
+    <Popup open={isOpen} modal contentStyle={{ background: 'white' }}>
       {(close) => (
         <div className="custom-popup">
           <button className="close-btn" onClick={close}>

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import LoadingPopup from './LoadingPopup'; // Import your loading popup component
-import './Sidebar.css'; // Import your CSS file here
+import LoadingPopup from './LoadingPopup'; 
+import './Sidebar.css'; 
 import BoardPopup from './BoardPopup';
-import JobContext from '../context/JobContext';
 import { useBrdsContext } from '../hooks/useBrdsContext';
 import { useAuthContext } from "../hooks/useAuthContext";
 import BoardIdContext from '../context/BoardIdContext';
@@ -13,23 +12,15 @@ const Sidebar = () => {
   const { brds, dispatch } = useBrdsContext();
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const { BoardId, setBoardId } = React.useContext(BoardIdContext);
-  const { interested, setInterested, applied, setApplied, interview, setInterview, final, setFinal } = React.useContext(JobContext);
-  const [active, setActive] = useState('Learn Python');
 
   useEffect(() => {
-
-    console.log("Heyyyy kkk")
-
     const fetchBoards = async () => {
       try {
         const response = await fetch("/api/Board/", {
           headers: { 'Authorization': `Bearer ${user.token}` },
-
         });
         const json = await response.json();
-
         if (response.ok) {
           dispatch({ type: 'SET_BRDS', payload: json });
           const latestBoardId = json.length > 0 ? json[json.length - 1]._id : null;

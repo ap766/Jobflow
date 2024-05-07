@@ -48,10 +48,7 @@ const Home = () => {
         <button style={{ fontSize: '14px' }}>Try it Out!</button>
       </div>
 
-      {/* Screenshots section */}
-      <div className="screenshots-section">
-        {/* Your screenshots section here */}
-      </div>
+     
     </div>
   );
 };
