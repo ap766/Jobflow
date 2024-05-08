@@ -1,10 +1,13 @@
 const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 
+
+//JWT-Header,Payload,Sign
+//type of token and algorithm if not specified HS256
 //id is payload
-//For example, if you're using the jsonwebtoken library in Node.js, the default algorithm used for signing tokens is HS256 for symmetric signing when a secret key is provided, and RS256 for asymmetric signing when a private key is provided.
 
 
+//After a user successfully logs in or signs up, the server generates a token (e.g., JWT) representing the user's authentication status and includes it in the response sent back to the client (frontend). The token serves as proof of authentication for subsequent requests made by the user.
 const createToken = (_id) => {
   return jwt.sign({_id}, process.env.SECRET, { expiresIn: '3d' })
 }
@@ -41,5 +44,8 @@ const signupUser = async (req, res) => {
   }
 }
 
-//In JavaScript, the module object is a special object available in Node.js environments that represents the current module.
 module.exports = { signupUser, loginUser }
+
+
+
+//so here when they signip or login a special jwt token is created and sent to frontend , so with every response they can send it back , to verify the sign .

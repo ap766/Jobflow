@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const getJobs = async (req, res) => {
 
 try {
+  
   const { board_id } = req.params.id;
   const user_id = req.user._id;
   console.log("The BOARD ID IS")

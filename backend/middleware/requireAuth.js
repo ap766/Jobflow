@@ -12,8 +12,11 @@ const requireAuth = async (req, res, next) => {
   const token = authorization.split(' ')[1]
 
   try {
+
+    //So the verificaton happens by extracting the id from the frontend jwt token.
     const { _id } = jwt.verify(token, process.env.SECRET)
 
+    //will be used furthur 
     req.user = await User.findOne({ _id }).select('_id')
     
     next()

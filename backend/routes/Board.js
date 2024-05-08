@@ -1,6 +1,5 @@
 const express = require('express')
 const {
-  
 getBoards,
 getBoard,
 createBoard,

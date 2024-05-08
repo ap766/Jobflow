@@ -1,4 +1,9 @@
 import React from "react";
+
+//The <BrowserRouter> component is a top-level component that is used to wrap the entire application
+//BrowserRouter component uses HTML5 history API 
+//<Routes> is a container for Route components
+//<Route> is used to specify individual routes and their corresponding components.
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthContext } from './hooks/useAuthContext'
 import Navbar from './components/Navbar'

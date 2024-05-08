@@ -13,19 +13,24 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const { BoardId, setBoardId } = React.useContext(BoardIdContext);
+  const [active, setActive] = useState('Learn Python');
 
   useEffect(() => {
+
     const fetchBoards = async () => {
       try {
         const response = await fetch("/api/Board/", {
           headers: { 'Authorization': `Bearer ${user.token}` },
+
         });
         const json = await response.json();
+
         if (response.ok) {
           dispatch({ type: 'SET_BRDS', payload: json });
           const latestBoardId = json.length > 0 ? json[json.length - 1]._id : null;
           console.log("Latest Board ID:", latestBoardId);
           setBoardId(latestBoardId);
+          
         }
       } catch (error) {
         console.error('Error fetching boards:', error);

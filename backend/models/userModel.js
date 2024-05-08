@@ -1,4 +1,8 @@
 const mongoose = require('mongoose')
+//Mongoose is an Object Data Modeling (ODM) library for MongoDB and Node.js.To create a model
+//Wrapper around MongoDB
+// It provides a higher-level, schema-based abstraction over the MongoDB Node.js driver
+//Overall, Mongoose simplifies MongoDB interactions and data modeling for Node.js applications, providing a rich set of features for schema definition, data validation, query building, and middleware execution
 const bcrypt = require('bcrypt')
 const validator = require('validator')
 
@@ -13,10 +17,9 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
+    required: true,
   }
 })
-
-
 
 
 // static signup method
@@ -47,18 +50,19 @@ userSchema.statics.signup = async function(email, password) {
 //and gives users time to change their passwords
 //hashed passwords compared when they log in
 
+
 //bcrypt is a hashing function 
 //salt - random string added to the password before hashing to make it unique (same passwords)
-//extra layer of protection
+//extra layer of protection 
 
   const salt = await bcrypt.genSalt(10)
   const hash = await bcrypt.hash(password, salt)
   const user = await this.create({ email, password: hash })
-  //THIS WHERE ITS BEEN CREATED
 
   return user
 }
 
+//statics is an object where you can add methods that are attached directly to your model
 
 // static login method
 userSchema.statics.login = async function(email, password) {
@@ -68,6 +72,7 @@ userSchema.statics.login = async function(email, password) {
   }
 
   const user = await this.findOne({ email })
+
   if (!user) {
     throw Error('Incorrect email')
   }

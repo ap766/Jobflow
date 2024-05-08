@@ -1,5 +1,4 @@
-//didnt exist
-//Former - was Boardmodel
+
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema

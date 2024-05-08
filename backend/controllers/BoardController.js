@@ -8,8 +8,15 @@ const getBoards = async (req, res) => {
   try {
     // Assuming Jb is your Mongoose model for boards
     const boards = await Bd.find({ user_id: user_id }).sort({ createdAt: -1 });
+
+    res.status(200).json(boards);//Convert to json format
     
-    res.status(200).json(boards);
+    /*data is stored in BSON format within MongoDB, it is seamlessly 
+    converted to JavaScript objects or arrays when retrieved in your application, 
+    making it easy to work with in JavaScript code. However, when sending this data 
+    over HTTP responses, you typically convert it to JSON format using the json() method 
+    of the Express response object, as JSON is the standard format for data interchange over the web.*/
+
   } catch (error) {
     console.error('Error fetching boards:', error);
     res.status(500).json({ message: 'Server error' });

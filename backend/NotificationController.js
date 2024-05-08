@@ -1,9 +1,12 @@
 const cron = require('node-cron');
+//Imports the node-cron module, which allows for scheduling tasks to run at specified intervals.
+
 const Notification = require('../backend/models/JobModel');
 const notifier = require('node-notifier');
 
 function scheduleNotifications() {
-    console.log("Hello");
+
+    
     // Schedule a task to run every minute
     cron.schedule('* * * * *', async () => {
         try {
@@ -19,30 +22,33 @@ function scheduleNotifications() {
 
            
             console.log("Executing scheduleNotifications task...");
+
             // Query the database for events scheduled within the next minute
             const events = await Notification.find({ roundtiming: { $gte: isoString } });
             console.log("Events scheduled within the next minute:", events);
+
             
             // Get users who have opted in to receive notifications
             const users = await Notification.find({ receiveNotifications: true });
 
             // Iterate through events
             events.forEach(event => {
+
                 // Check if event has any round timings
                 if (event.roundtiming.length > 0) {
-                    console.log("hey boi")
                     console.log(event.roundinfo)
+
                     // Iterate through round timings
                     event.roundtiming.forEach(roundTime => {
-                        console.log("hey")
+                        
                         const currentTime = Date.now();
                         console.log(currentTime);
                         const eventTime = new Date(roundTime);
                         console.log(eventTime);
-
+                         
                         // Check if event's round timing falls within the next minute
-                        if (eventTime >= currentTime && eventTime < currentTime + 60000) {
-                            console.log("WOW AMAZING")
+                        if (eventTime >= currentTime && eventTime < currentTime + 60000 ) {
+
                             // Trigger notification for the event round
                             const index = event.roundtiming.indexOf(roundTime);
                             console.log(index)
