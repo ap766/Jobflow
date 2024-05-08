@@ -1,3 +1,7 @@
+//GET BOARDS
+
+
+
 import React, { useState, useEffect } from 'react';
 import LoadingPopup from './LoadingPopup'; 
 import './Sidebar.css'; 
@@ -13,7 +17,7 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const { BoardId, setBoardId } = React.useContext(BoardIdContext);
-  const [active, setActive] = useState('Learn Python');
+  const [active, setActive] = useState('Default');
 
   useEffect(() => {
 
@@ -30,7 +34,8 @@ const Sidebar = () => {
           const latestBoardId = json.length > 0 ? json[json.length - 1]._id : null;
           console.log("Latest Board ID:", latestBoardId);
           setBoardId(latestBoardId);
-          
+
+
         }
       } catch (error) {
         console.error('Error fetching boards:', error);
@@ -43,17 +48,18 @@ const Sidebar = () => {
   }, [dispatch, user]);
   
 
+  //Functions are editCard,handleAddCard,loadBoard,handleDeleteCard
+
   //this is to rename the board
-  const handleClick = (card) => {
+  const editCard = (card) => {
     setActive(card);
     setIsOpen(true);
   };
 
   const handleAddCard = async () => {
     try {
-      const cardData = {
+      const boardData = {
         title: 'New Title',
-        description: 'New card Description',
       };
 
       const response = await fetch('/api/Board/', {
@@ -62,7 +68,7 @@ const Sidebar = () => {
           'Authorization': `Bearer ${user.token}`,
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(cardData)
+        body: JSON.stringify(boardData)
       });
 
       if (!response.ok) {
@@ -75,11 +81,13 @@ const Sidebar = () => {
       console.error('Error adding new card:', error);
     }
   };
-  const handleSingleClick = (card) => {
+
+
+
+  const loadBoard = (card) => {
     setActive(card);
     // Show loading screen
     setLoading(true);
-
     // Simulate an asynchronous operation (e.g., API call)
     setTimeout(() => {
       // Update the board ID in the state
@@ -120,15 +128,14 @@ const Sidebar = () => {
   <li key={index}>
     <span
       className={active.title == board.title ? 'active board-title' : 'board-title'}
-      // onClick={() => handleClick(board)}
-      onDoubleClick={() => handleSingleClick(board)}
+      onDoubleClick={() => loadBoard(board)}
 
     >
       {board.title}
     </span>
     <span>
   <div className="button-container">
-    <button onClick={()=>handleClick(board)}className="edit-button">
+    <button onClick={()=>editCard(board)}className="edit-button">
       Edit
     </button>
     <button onClick={() => handleDeleteCard(board._id)} className="delete-button">
@@ -152,6 +159,7 @@ const Sidebar = () => {
             onClose={() => setIsOpen(false)}
           />
         )}
+        
           {loading && <LoadingPopup />}
       </div>
     </div>

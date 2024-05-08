@@ -1,5 +1,5 @@
 
-//GET cards 
+//GET cards  - as per boardid
 
 //This is the component that is used to render the kanban board( used to keep track of different Applications)
 //This component is used to render the columns and the cards in the columns
