@@ -31,11 +31,10 @@ const Sidebar = () => {
 
         if (response.ok) {
           dispatch({ type: 'SET_BRDS', payload: json });
-          const latestBoardId = json.length > 0 ? json[json.length - 1]._id : null;
-          console.log("Latest Board ID:", latestBoardId);
-          setBoardId(latestBoardId);
-
-
+          const latestBoard = json.length > 0 ? json[json.length - 1] : null;
+          console.log("Latest Board ID:", latestBoard?._id);
+          setBoardId(latestBoard?._id);
+          setActive(latestBoard); // Set the latest board as active
         }
       } catch (error) {
         console.error('Error fetching boards:', error);
@@ -159,7 +158,7 @@ const Sidebar = () => {
             onClose={() => setIsOpen(false)}
           />
         )}
-        
+
           {loading && <LoadingPopup />}
       </div>
     </div>
