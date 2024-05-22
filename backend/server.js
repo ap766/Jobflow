@@ -14,7 +14,7 @@ const app = express()
 
 // middleware
 app.use(express.json())
-app.use(cors({ origin: 'https://jobflow-1.onrender.com/' })) // Use CORS middleware with specific origin
+app.use(cors()) // Use CORS middleware with specific origin
 
 app.use((req, res, next) => {
   console.log(req.path, req.method)
