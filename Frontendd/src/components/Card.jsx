@@ -96,7 +96,7 @@ export default function Card({ card, index, column }) {
   
     
     try {
-      const response = await fetch(`/api/JobAppSteps/${card.id}`, {
+      const response = await fetch(`https://jobflow-bo2c.onrender.com/api/JobAppSteps/${card.id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

@@ -103,7 +103,7 @@ export default function Column({ title, cards, id }) {
 
         //Storing a new Application called untitled in the database
         try {
-            const response = await fetch("/api/JobAppSteps/", {
+            const response = await fetch("https://jobflow-bo2c.onrender.com/api/JobAppSteps/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

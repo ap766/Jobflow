@@ -23,7 +23,7 @@ const Sidebar = () => {
 
     const fetchBoards = async () => {
       try {
-        const response = await fetch("/api/Board/", {
+        const response = await fetch("https://jobflow-bo2c.onrender.com/api/Board/", {
           headers: { 'Authorization': `Bearer ${user.token}` },
 
         });
@@ -61,7 +61,7 @@ const Sidebar = () => {
         title: 'New Title',
       };
 
-      const response = await fetch('/api/Board/', {
+      const response = await fetch('https://jobflow-bo2c.onrender.com/api/Board/', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${user.token}`,
@@ -99,7 +99,7 @@ const Sidebar = () => {
 
   const handleDeleteCard = async (boardId) => {
     try {
-      const response = await fetch(`/api/Board/${boardId}`, {
+      const response = await fetch(`https://jobflow-bo2c.onrender.com/api/Board/${boardId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${user.token}`,

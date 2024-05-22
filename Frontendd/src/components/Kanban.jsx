@@ -33,7 +33,7 @@ export default function Kanban() {
 
             //It makes an HTTP GET request to the api/JobAppSteps/${BoardId} endpoint using the fetch API.
             try {
-                const response = await fetch(`api/JobAppSteps/${BoardId}`, {
+                const response = await fetch(`https://jobflow-bo2c.onrender.com/api/JobAppSteps/${BoardId}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -85,7 +85,7 @@ export default function Kanban() {
 
     //The different function here include Notification, handleDragEnd,deletePreviousState,findItemById,removeItemById(last 2 based on id of db)
     const Notification = async () => { try {
-        const response = await fetch(`api/JobAppSteps/`, {
+        const response = await fetch(`https://jobflow-bo2c.onrender.com/api/JobAppSteps/`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -138,7 +138,7 @@ export default function Kanban() {
 
         // Make a PATCH request to update the card status on the backend
         try {
-            await fetch(`api/JobAppSteps/${draggableId}`, {
+            await fetch(`https://jobflow-bo2c.onrender.com/api/JobAppSteps/${draggableId}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

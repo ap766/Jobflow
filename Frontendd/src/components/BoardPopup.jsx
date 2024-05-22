@@ -51,7 +51,7 @@ const BoardPopup = ({ board, isOpen, onClose }) => {
       const updatedBoard = { ...board, title: newTitle };
 
       // Make a PATCH request to update the board in the database
-      const response = await fetch(`/api/Board/${board._id}`, {
+      const response = await fetch(`https://jobflow-bo2c.onrender.com/api/Board/${board._id}`, {
         method: 'PATCH',
         headers: {
           'Authorization': `Bearer ${user.token}`,

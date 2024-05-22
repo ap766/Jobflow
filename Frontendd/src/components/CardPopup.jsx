@@ -185,7 +185,7 @@ export default function CardPopup({ ID, isOpen, card, column,onClose}) {
             //if dates is defined 
             const istDates = dates && dates.length > 0 ? dates.map(date => new Date(date).toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })) : [];
             console.log("Updating card...");
-            const response = await fetch(`/api/JobAppSteps/${ID}`, {
+            const response = await fetch(`https://jobflow-bo2c.onrender.com/api/JobAppSteps/${ID}`, {
                 method: 'PATCH', 
                 headers: {
                     'Content-Type': 'application/json',
