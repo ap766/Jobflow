@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors') // Import the CORS package
 const scheduleNotifications = require('./NotificationController.js'); // Import the function to schedule notifications
 
 // import routes
@@ -13,6 +14,7 @@ const app = express()
 
 // middleware
 app.use(express.json())
+app.use(cors({ origin: 'https://jobflow-1.onrender.com/' })) // Use CORS middleware with specific origin
 
 app.use((req, res, next) => {
   console.log(req.path, req.method)
