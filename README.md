@@ -1,5 +1,14 @@
 # Jobflow
+
+Jobflow is a project designed to streamline and enhance the job application process, inspired by personal experiences in tracking my internship applications. Traditional tools like Spreadsheets and Notepads were not to my liking since they lack the visual representation and intuitive workflow management.
+
+Spreadsheets have a tabular format which is cumbersome for tracking multiple applications, while Notepad lacks organizational structure. Jobflow's Kanban board simplifies tracking with drag-and-drop functionality, allowing users to move applications across stages like "interested," "applied," "rounds/interviews," and "heard back."
+
+Customizable boards cater to users' specific needs, whether for internships, jobs, or other opportunities. There is no limit to the number of boards - whether you are using it for a Winter Internship or to Apply for a job next summer. Users can also manage comprehensive details within the platform, including job titles, descriptions, links, and scheduling for rounds.
+
+Moreover, Jobflow integrates desktop notifications for scheduled rounds to ensure users stay informed. Built with the MERN Stack, Jobflow combines modern web technologies' flexibility with intuitive visual task management. With Jobflow, the job search process becomes efficient and enjoyable, empowering users to stay organized and focused on their career goals.
 With this application, users can easily organize and track their job applications, ensuring a streamlined and efficient job search process.
+
 ## Tech Stack
 + Frontend - Reactjs,HTML,CSS
 + Backend - Nodejs,Expressjs,Mongodb
