@@ -57,8 +57,8 @@ Click on delete option
 + Filling all details necessary for job which can be entered in any online job application using the Chrome Extension
 + Bot on the website to help with general advise related to jobs/internships
 
-## How to run 
-# To run Backend
+# How to run 
+## To run Backend
 Navigate to the project directory:
 
 `cd backend`
@@ -71,7 +71,7 @@ To start the Dimensioning Backend in development mode, execute the following com
 
 `npm run dev`
 
-# To run Frontend
+## To run Frontend
 Navigate to the project directory:
 
 `cd Frontendd`
@@ -84,9 +84,9 @@ To start the Frontend:
 
 `npm run start`
 
-## Diagrams
-# Use Case Diagram
-![image](https://github.com/user-attachments/assets/db9788d7-2e2a-40ed-9ca8-4a7c79a221aa)
+# Diagrams
+## Use Case Diagram
+![image](https://github.com/user-attachments/assets/efcf51d2-64ef-471a-aaa5-686830a92811)
 
 
 
