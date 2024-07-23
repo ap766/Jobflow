@@ -84,10 +84,30 @@ To start the Frontend:
 
 `npm run start`
 
-# Diagrams
+# Design
 ## Use Case Diagram
 ![image](https://github.com/user-attachments/assets/efcf51d2-64ef-471a-aaa5-686830a92811)
 
-
+## Architectural Design 
+MVC Architecture Followed
++ Model
+   + Encapsulates the Application State
+   + Business Logic - Because it defines the rules for how the data can be stored , modified , created
+   + Database - Structure Defined
+   + From Controller - CRUD Operations are performed by interacting with it
+   + From View - Notifies Updates (NS)
++ Controller
+   + Maps User Actions to model updates
+   + Selects Views - Indirectly
+   + HTTP request processing
+   + Application Specific Logic
+   + Data Validation
++ View
+   + Renders Model
+   + Sends User Events to the controller
+   + Requests Model Updates
+   + Dynamic Page Generation 
+   + Form Management
+  
 
     
