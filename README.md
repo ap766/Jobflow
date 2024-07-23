@@ -83,4 +83,11 @@ Install dependencies using npm:
 To start the Frontend:
 
 `npm run start`
+
+## Diagrams
+# Use Case Diagram
+![image](https://github.com/user-attachments/assets/db9788d7-2e2a-40ed-9ca8-4a7c79a221aa)
+
+
+
     
