@@ -56,6 +56,7 @@ Click on delete option
 + Web Scrapping for finding relevant jobs as per our interest
 + Filling all details necessary for job which can be entered in any online job application using the Chrome Extension
 + Bot on the website to help with general advise related to jobs/internships
++ Maybe Admin posting jobs manually or through some other means?
 
 # How to run 
 ## To run Backend
